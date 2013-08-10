@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  classification: MyString
+  x: 1.5
+  'y': 1.5
+  name: MyString
+  description: MyString
+  data: MyText
+
+two:
+  classification: MyString
+  x: 1.5
+  'y': 1.5
+  name: MyString
+  description: MyString
+  data: MyText

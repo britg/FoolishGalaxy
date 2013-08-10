@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  minerals: 1
+  gas: 1
+  organic: 1
+  x: 1.5
+  'y': 1.5
+  destination_x: 1.5
+  destination_y: 1.5
+  scanner_radius: 1.5
+
+two:
+  name: MyString
+  minerals: 1
+  gas: 1
+  organic: 1
+  x: 1.5
+  'y': 1.5
+  destination_x: 1.5
+  destination_y: 1.5
+  scanner_radius: 1.5

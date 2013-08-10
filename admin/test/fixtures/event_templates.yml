@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  message: MyString
+  data: MyText
+  context: MyString
+  sequence: 1
+
+two:
+  message: MyString
+  data: MyText
+  context: MyString
+  sequence: 1
