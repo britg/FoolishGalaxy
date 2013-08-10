@@ -13,7 +13,7 @@ Shader "Hidden/SGT/PlanetSurface/VariantAtmosphereOuterNormalSpecularRingShadowD
 		maxDepth("maxDepth", Float) = 0.0
 		surfaceRadius("surfaceRadius", Float) = 0.0
 		atmosphereHeight("atmosphereHeight", Float) = 0.0
-		normalMapTexture("normalMapTexture", 2D) = "bump" {}
+		normalTexture("normalTexture", 2D) = "bump" {}
 		starDirectionM("starDirectionM", Vector) = (0.0, 0.0, 0.0, 0.0)
 		specularTexture("specularTexture", 2D) = "black" {}
 		specularPower("specularPower", Float) = 0.0

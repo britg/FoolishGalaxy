@@ -15,6 +15,7 @@ public class SGT_Inspector_Dust : SGT_Inspector<SGT_Dust>
 			Target.DustSeed        = SGT_EditorGUI.SeedField("Seed", "The random seed used when generating the dust particles.", Target.DustSeed);
 			Target.DustCount       = SGT_EditorGUI.IntField("Count", "The amount of dust particles in the dust field.", Target.DustCount);
 			Target.DustRadius      = SGT_EditorGUI.FloatField("Radius", "The maximum distance between the camera and a dust particle.", Target.DustRadius);
+			Target.DustCamera      = SGT_EditorGUI.ObjectField("Camera", "The camera that's rendering this dust particles.", Target.DustCamera, true);
 			Target.DustAutoRegen   = SGT_EditorGUI.BoolField("Auto Regen", "Automatically regenerate the dust particle mesh when making changes?", Target.DustAutoRegen);
 			
 			if (Target.DustAutoRegen == false)

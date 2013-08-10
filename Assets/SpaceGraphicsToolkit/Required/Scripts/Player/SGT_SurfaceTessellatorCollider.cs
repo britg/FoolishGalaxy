@@ -109,11 +109,23 @@ public class SGT_SurfaceTessellatorCollider : SGT_MonoBehaviourUnique<SGT_Surfac
 		{
 			StartCoroutine(Update_Coroutine());
 		}
+		
+		if (activeCollider != null)
+		{
+			activeCollider.MeshCollidersEnabled = true;
+			activeCollider.Update();
+		}
 	}
 	
 	public void OnDisable()
 	{
 		StopAllCoroutines();
+		
+		if (activeCollider != null)
+		{
+			activeCollider.MeshCollidersEnabled = false;
+			activeCollider.Update();
+		}
 	}
 	
 	public new void OnDestroy()

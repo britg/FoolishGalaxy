@@ -105,6 +105,8 @@ public partial class SGT_Star
 		
 		get
 		{
+			if (surfaceMultiMesh == null) surfaceMultiMesh = new SGT_SurfaceMultiMesh();
+			
 			return surfaceMultiMesh;
 		}
 	}

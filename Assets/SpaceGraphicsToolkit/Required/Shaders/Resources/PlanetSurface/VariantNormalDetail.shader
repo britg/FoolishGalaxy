@@ -7,7 +7,7 @@ Shader "Hidden/SGT/PlanetSurface/VariantNormalDetail"
 		lightingTexture("lightingTexture",  2D) = "white" {}
 		centrePosition("centrePosition", Vector) = (0.0, 0.0, 0.0, 0.0)
 		starDirection("starDirection", Vector) = (0.0, 0.0, 0.0, 0.0)
-		normalMapTexture("normalMapTexture", 2D) = "bump" {}
+		normalTexture("normalTexture", 2D) = "bump" {}
 		starDirectionM("starDirectionM", Vector) = (0.0, 0.0, 0.0, 0.0)
 		detailTexture("detailTexture",  2D) = "white" {}
 		detailRepeat("detailRepeat", Float) = 0.0

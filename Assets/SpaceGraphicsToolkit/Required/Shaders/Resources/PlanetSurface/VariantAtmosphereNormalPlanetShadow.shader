@@ -13,7 +13,7 @@ Shader "Hidden/SGT/PlanetSurface/VariantAtmosphereNormalPlanetShadow"
 		maxDepth("maxDepth", Float) = 0.0
 		surfaceRadius("surfaceRadius", Float) = 0.0
 		atmosphereHeight("atmosphereHeight", Float) = 0.0
-		normalMapTexture("normalMapTexture", 2D) = "bump" {}
+		normalTexture("normalTexture", 2D) = "bump" {}
 		starDirectionM("starDirectionM", Vector) = (0.0, 0.0, 0.0, 0.0)
 		shadowTexture("shadowTexture",  2D) = "white" {}
 		shadowValues("shadowValues", Vector) = (0.0, 0.0, 0.0, 0.0)
