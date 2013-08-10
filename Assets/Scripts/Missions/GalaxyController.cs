@@ -10,6 +10,8 @@ public class GalaxyController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+    selected = 0;
+    UpdateSelection();
 	}
 
 	// Update is called once per frame
