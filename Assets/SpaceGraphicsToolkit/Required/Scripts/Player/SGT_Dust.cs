@@ -46,6 +46,9 @@ public class SGT_Dust : SGT_MonoBehaviourUnique<SGT_Dust>
 	private bool dustMirror;
 	
 	[SerializeField]
+	private Camera dustCamera;
+	
+	[SerializeField]
 	private Texture2D particleTexture;
 	
 	[SerializeField]
@@ -74,6 +77,12 @@ public class SGT_Dust : SGT_MonoBehaviourUnique<SGT_Dust>
 	
 	[SerializeField]
 	private Material dustMaterial;
+	
+	[SerializeField]
+	private Quaternion dustCameraRotation;
+	
+	[SerializeField]
+	private float particleRoll;
 	
 	public bool DustModified
 	{
@@ -189,6 +198,27 @@ public class SGT_Dust : SGT_MonoBehaviourUnique<SGT_Dust>
 		get
 		{
 			return dustCount;
+		}
+	}
+	
+	public Camera DustCamera
+	{
+		set
+		{
+			if (value != dustCamera)
+			{
+				dustCamera = value;
+				
+				if (dustCamera != null)
+				{
+					dustCameraRotation = dustCamera.transform.rotation;
+				}
+			}
+		}
+		
+		get
+		{
+			return dustCamera;
 		}
 	}
 	
@@ -430,18 +460,29 @@ public class SGT_Dust : SGT_MonoBehaviourUnique<SGT_Dust>
 		if (dust         == null) dust         = SGT_Helper.CreateGameObject("Dust", this);
 		if (dustMesh     == null) dustMesh     = new SGT_Mesh();
 		if (dustMaterial == null) dustMaterial = SGT_Helper.CreateMaterial("Hidden/SGT/Dust/" + dustTechnique);
+		if (dustCamera   == null) dustCamera   = SGT_Helper.FindCamera();
 		
 		SGT_Helper.SetParent(dust, gameObject);
 		SGT_Helper.SetLayer(dust, gameObject.layer);
 		SGT_Helper.SetTag(dust, gameObject.tag);
 		
-		var finalColour = SGT_Helper.Premultiply(particleColour);
+		var finalColour           = SGT_Helper.Premultiply(particleColour);
+		var oldDustCameraRotation = dustCameraRotation;
+		
+		if (dustCamera != null) dustCameraRotation = dustCamera.transform.rotation;
+		
+		var cameraRotationDelta = Quaternion.Inverse(oldDustCameraRotation) * dustCameraRotation;
+		
+		particleRoll -= cameraRotationDelta.eulerAngles.z;
+		
+		var roll = Quaternion.Euler(new Vector3(0.0f, 0.0f, particleRoll));
 		
 		dustMaterial.SetTexture("dustTexture", particleTexture);
 		dustMaterial.SetFloat("dustRadius", dustRadius);
 		dustMaterial.SetColor("particleColour", finalColour);
 		dustMaterial.SetFloat("particleFadeInDistance", dustRadius / particleFadeInDistance);
 		dustMaterial.SetFloat("particleFadeOutDistance", dustRadius / particleFadeOutDistance);
+		dustMaterial.SetMatrix("particleRoll", SGT_MatrixHelper.Rotation(roll));
 		
 		SGT_Helper.SetRenderQueue(dustMaterial, dustRenderQueue);
 		

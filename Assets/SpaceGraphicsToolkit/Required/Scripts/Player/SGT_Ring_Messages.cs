@@ -18,6 +18,10 @@ public partial class SGT_Ring
 		if (ringMesh       == null) ringMesh       = new SGT_MultiMesh();
 		if (lightSource    == null) lightSource    = SGT_LightSource.Find();
 		
+		SGT_Helper.SetParent(ringGameObject, gameObject);
+		SGT_Helper.SetLayer(ringGameObject, gameObject.layer);
+		SGT_Helper.SetTag(ringGameObject, gameObject.tag);
+		
 		if (ringAutoRegen == true)
 		{
 			Regenerate();

@@ -6,6 +6,7 @@ float     dustRadius;
 float4    particleColour;
 float     particleFadeInDistance;
 float     particleFadeOutDistance;
+float4x4  particleRoll;
 
 struct a2v
 {
@@ -29,10 +30,11 @@ void Vert(a2v i, out v2f o)
 	float3 rep = frac(i.vertex.xyz - cam.xyz) - 0.5f;
 	
 	i.vertex.xyz = cam.xyz + rep;
+	i.normal.xyz = mul(particleRoll, i.normal.xyzz);
 	
-	float  radius   = i.texcoord1.x;
-	float4 vertexMV = mul(UNITY_MATRIX_MV, i.vertex);
-	float3 offsetMV = i.normal * radius / unity_Scale.w;
+	float  radius    = i.texcoord1.x;
+	float4 vertexMV  = mul(UNITY_MATRIX_MV, i.vertex);
+	float3 offsetMV  = i.normal * radius / unity_Scale.w;
 	float4 cornerMV  = vertexMV; cornerMV.xyz += offsetMV;
 	float4 cornerMVP = mul(UNITY_MATRIX_P, cornerMV);
 	
