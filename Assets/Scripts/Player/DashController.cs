@@ -130,7 +130,6 @@ public class DashController : MonoBehaviour {
   }
 
   void OnJumpStart () {
-    canDash = true;
   }
 
 }

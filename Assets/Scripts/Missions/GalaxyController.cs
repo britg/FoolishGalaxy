@@ -65,7 +65,7 @@ public class GalaxyController : MonoBehaviour {
   void DetectEnter () {
     if (Input.GetButtonDown("Jump")) {
       MissionSelect sel = missions[selected];
-      Application.LoadLevel(sel.missionName + " Start");
+      Application.LoadLevel(sel.missionName + " Play");
     }
   }
 

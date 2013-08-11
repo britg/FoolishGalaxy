@@ -3,10 +3,8 @@ using System.Collections;
 
 public class Timer : MonoBehaviour {
 
-  public GUIText completeText;
-
   private float time = 0.0f;
-  private bool shouldUpdateTime = true;
+  private bool shouldUpdateTime = false;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +37,10 @@ public class Timer : MonoBehaviour {
 
   void OnShuttle () {
     shouldUpdateTime = false;
-    completeText.text = "<color=green>" + TimeFormat() + "</color>";
+  }
+  
+  void OnTrapSprung () {
+    shouldUpdateTime = true;
   }
 
 
