@@ -1,14 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-public enum PlayerDirection {
-  Left,
-  Right,
-  Up,
-  Down,
-  None
-}
-
 public class MoveController : MonoBehaviour {
 
   private GameObject playerView;
@@ -66,6 +58,7 @@ public class MoveController : MonoBehaviour {
       currentRot = new Vector3(0, -180, 0);
     }
     playerView.transform.eulerAngles = currentRot;
+    player.facing = dir;
   }
 
   public void MovePlayer (Vector3 input) {
