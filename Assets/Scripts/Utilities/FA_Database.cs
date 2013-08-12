@@ -3,20 +3,20 @@ using System.Collections;
 using System.IO;
 using System.Text;
 
-public class LG_Database : MonoBehaviour {
+public class FA_Database : MonoBehaviour {
 
 
+  public static string dbName = "foolish_galaxy.db";
   private static string dbPath = null;
-
-  private static LG_Database instance;
+  private static FA_Database instance;
 
   SQLiteDB db = null;
   SQLiteQuery qr = null;
 
-  public static LG_Database Instance {
+  public static FA_Database Instance {
     get {
 
-      dbPath = Application.persistentDataPath + "/lg.db";
+      dbPath = Application.persistentDataPath + "/" + dbName;
 
       if (instance == null) {
         CreateInstance();
@@ -37,7 +37,7 @@ public class LG_Database : MonoBehaviour {
       CopyDB();
     }
 
-    instance = new GameObject("DB").AddComponent<LG_Database>();
+    instance = new GameObject("DB").AddComponent<FA_Database>();
   }
 
 
@@ -47,12 +47,12 @@ public class LG_Database : MonoBehaviour {
     byte[] bytes = null;
 
 #if UNITY_EDITOR
-    string startPath = "file://" + Application.streamingAssetsPath + "/lg.db";
+    string startPath = "file://" + Application.streamingAssetsPath + "/" + dbName;
     WWW www = new WWW(startPath);
     Download(www);
     bytes = www.bytes;
 #elif UNITY_IPHONE
-    string startPath = Application.dataPath + "/Raw/lg.db";
+    string startPath = Application.dataPath + "/Raw/" + dbName;
     using ( FileStream fs = new FileStream(startPath, FileMode.Open, FileAccess.Read, FileShare.Read) ){
       bytes = new byte[fs.Length];
       fs.Read(bytes,0,(int)fs.Length);
