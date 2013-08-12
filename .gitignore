@@ -23,6 +23,7 @@ Temp
 *.csproj
 *.pidb
 *.sln
+*.suo
 build
 
 # Xcode
