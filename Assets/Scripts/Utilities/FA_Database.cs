@@ -2,6 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 using System.Text;
+using Community.CsharpSqlite;
+
+enum FA_DatabaseMode {
+  Reset,
+  Keep
+}
 
 public class FA_Database : MonoBehaviour {
 
@@ -9,6 +15,7 @@ public class FA_Database : MonoBehaviour {
   public static string dbName = "foolish_galaxy.db";
   private static string dbPath = null;
   private static FA_Database instance;
+  private static FA_DatabaseMode mode = FA_DatabaseMode.Reset;
 
   SQLiteDB db = null;
   SQLiteQuery qr = null;
@@ -32,7 +39,9 @@ public class FA_Database : MonoBehaviour {
   }
 
   static void CreateInstance () {
-    DeleteDB();
+    if (mode == FA_DatabaseMode.Reset) {
+      DeleteDB();
+    }
     Debug.Log(dbPath);
     if (!File.Exists(dbPath)) {
       CopyDB();
@@ -80,6 +89,46 @@ public class FA_Database : MonoBehaviour {
     Debug.Log("Executing query " + sql);
     Instance.qr = new SQLiteQuery(Instance.db, sql);
     return Instance.qr;
+  }
+
+  public static ArrayList Extract (string q) {
+    ArrayList results = new ArrayList();
+    Hashtable row;
+    SQLiteQuery qr = Query(q);
+
+    while ((row = ExtractRow(qr)) != null) {
+      results.Add(row);
+    }
+
+    return results;
+  }
+
+  public static Hashtable ExtractOne (string q) {
+    SQLiteQuery qr = Query(q);
+    return ExtractRow(qr);
+  }
+
+  public static Hashtable ExtractRow (SQLiteQuery qr) {
+    Hashtable tmp = null;
+    if (qr.Step()) {
+      tmp = new Hashtable();
+      foreach (string colName in qr.Names) {
+        int colType = qr.GetFieldType(colName);
+
+        switch (colType) {
+          case Sqlite3.SQLITE_TEXT:
+            tmp[colName] = qr.GetString(colName);
+            break;
+          case Sqlite3.SQLITE_INTEGER:
+            tmp[colName] = qr.GetInteger(colName);
+            break;
+          case Sqlite3.SQLITE_FLOAT:
+            tmp[colName] = qr.GetFloat(colName);
+            break;
+        }
+      }
+    }
+    return tmp;
   }
 
   void OnDestroy () {
