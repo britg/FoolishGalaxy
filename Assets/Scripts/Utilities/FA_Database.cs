@@ -32,6 +32,7 @@ public class FA_Database : MonoBehaviour {
   }
 
   static void CreateInstance () {
+    DeleteDB();
     Debug.Log(dbPath);
     if (!File.Exists(dbPath)) {
       CopyDB();
@@ -46,7 +47,7 @@ public class FA_Database : MonoBehaviour {
 
     byte[] bytes = null;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
     string startPath = "file://" + Application.streamingAssetsPath + "/" + dbName;
     WWW www = new WWW(startPath);
     Download(www);
