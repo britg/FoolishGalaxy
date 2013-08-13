@@ -23,7 +23,7 @@ class Notification {
     name = aName;
   }
 
-    public Notification (Component aSender, String aName, Hashtable aData)
+  public Notification (Component aSender, String aName, Hashtable aData)
   {
     sender = aSender;
     name = aName;
