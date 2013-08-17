@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
   public int jumpCount = 2;
   public int jumpsUsed = 0;
   public float jumpForce = 50.0f;
-  public int jumpDuration = 15; // frames
+  public float jumpDuration = 0.15f;
 
   public int dashCount = 1;
   public float dashForce = 50.0f;

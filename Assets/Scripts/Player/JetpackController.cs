@@ -15,7 +15,7 @@ public class JetpackController : MonoBehaviour {
   private Player player;
 
   private JumpState jumpState;
-  private int jumpPressFrames = 0;
+  private float jumpPressTime = 0.0f;
   private bool shouldHalt = false;
   private bool shouldJump = false;
   private bool hasNotifiedStart = false;
@@ -55,7 +55,9 @@ public class JetpackController : MonoBehaviour {
 
   void DetectJump () {
     if (Input.GetButtonDown("Jump") && (player.jumpsUsed < player.jumpCount)) {
-      if ((jumpState != JumpState.Up) || (jumpPressFrames > 5)) {
+
+      shouldJump = true;
+      if ((jumpState != JumpState.Up) || (jumpPressTime > 0.01f)) {
         shouldHalt = true;
         player.jumpsUsed++;
         jumpState = JumpState.Up;
@@ -66,9 +68,8 @@ public class JetpackController : MonoBehaviour {
     }
 
     if (Input.GetButton("Jump") && jumpState != JumpState.Down) {
-      if (jumpPressFrames < player.jumpDuration) {
-        shouldJump = true;
-        jumpPressFrames++;
+      if (jumpPressTime < player.jumpDuration) {
+        jumpPressTime += Time.deltaTime;
       } else {
         shouldJump = false;
         jumpState = JumpState.Down;
@@ -76,7 +77,7 @@ public class JetpackController : MonoBehaviour {
     }
 
     if (Input.GetButtonUp("Jump")) {
-      jumpPressFrames = 0;
+      jumpPressTime = 0.0f;
       jumpState = JumpState.Down;
       shouldJump = false;
     }
