@@ -4,18 +4,12 @@ using System.IO;
 using System.Text;
 using Community.CsharpSqlite;
 
-enum FA_DatabaseMode {
-  Reset,
-  Keep
-}
-
 public class FA_Database : MonoBehaviour {
 
 
   public static string dbName = "foolish_galaxy.db";
   private static string dbPath = null;
   private static FA_Database instance;
-  private static FA_DatabaseMode mode = FA_DatabaseMode.Reset;
 
   SQLiteDB db = null;
   SQLiteQuery qr = null;
@@ -23,7 +17,7 @@ public class FA_Database : MonoBehaviour {
   public static FA_Database Instance {
     get {
 
-      dbPath = Application.persistentDataPath + "/" + dbName;
+      SetDBPath();
 
       if (instance == null) {
         CreateInstance();
@@ -33,15 +27,16 @@ public class FA_Database : MonoBehaviour {
     }
   }
 
+  static void SetDBPath () {
+    dbPath = Application.persistentDataPath + "/" + dbName;
+  }
+
   void Awake () {
     db = new SQLiteDB();
     db.Open(dbPath);
   }
 
   static void CreateInstance () {
-    if (mode == FA_DatabaseMode.Reset) {
-      DeleteDB();
-    }
     Debug.Log(dbPath);
     if (!File.Exists(dbPath)) {
       CopyDB();
@@ -74,7 +69,8 @@ public class FA_Database : MonoBehaviour {
     }
   }
 
-  static void DeleteDB () {
+  public static void DeleteDB () {
+    SetDBPath();
     File.Delete(dbPath);
   }
 

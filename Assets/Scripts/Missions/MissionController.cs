@@ -11,6 +11,7 @@ public class MissionController : MonoBehaviour {
 	void Start () {
     trapText.enabled = false;
     Time.timeScale = 1.0f;
+    FA_Database.Query("SELECT * from players");
 	}
 	
 	// Update is called once per frame
@@ -49,7 +50,7 @@ public class MissionController : MonoBehaviour {
   IEnumerator ExitLevel () {
     NotificationCenter.PostNotification(this, "OnLevelExit");
     yield return new WaitForSeconds(.2f);
-    Application.LoadLevel("Galaxy");
+    Application.LoadLevel("Title");
   }
 
   void OnDeath (Notification note) {
