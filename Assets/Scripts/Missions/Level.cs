@@ -45,11 +45,19 @@ public class Level {
   }
 
   public void SaveProgress (bool completed, int milliseconds)  {
-    Debug.Log("Saving progress " + milliseconds);
     string q;
     int complete = (completed ? 1 : 0);
+    int previousTime = 10000000;
+
     if (progress["level_progress_id"] != null) {
-      Debug.Log("Progress exists!");
+      if ((int)progress["time"] > 0) {
+        previousTime = (int)progress["time"];
+        Debug.Log("Previous time was " + previousTime);
+
+        if (previousTime < milliseconds) {
+          milliseconds = previousTime;
+        }
+      }
       q = @"UPDATE level_progress
                    SET complete = " + complete + @",
                    time = " + milliseconds + @"

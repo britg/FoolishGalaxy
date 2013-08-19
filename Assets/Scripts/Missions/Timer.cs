@@ -39,7 +39,12 @@ public class Timer : MonoBehaviour {
       mss = "0" + ms;
     }
 
-    int sec = (int)Mathf.Round(_time) % 60;
+    int sec = (int)Mathf.Floor(_time) % 60;
+    string secs = "" + sec;
+    if (sec < 10) {
+      secs = "0" + sec;
+    }
+
     int min = (int)Mathf.Floor(_time / 60.0f);
 
     if (min < 1) {

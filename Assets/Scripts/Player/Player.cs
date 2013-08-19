@@ -41,9 +41,21 @@ public class Player : MonoBehaviour {
     }
   }
 
+  public bool exists {
+    get {
+      return attributes != null;
+    }
+  }
+
   public int id {
     get {
       return (int)attributes["id"];
+    }
+  }
+
+  public string name {
+    get {
+      return (string)attributes["name"];
     }
   }
 
@@ -56,6 +68,12 @@ public class Player : MonoBehaviour {
       _progress = new PlayerProgress(id);
       return _progress;
     }
+  }
+
+  public static void Create (string name) {
+    string q = @"INSERT INTO players (name, last_active)
+                  VALUES ('" + name + "', 1);";
+    FA_Database.Execute(q);
   }
 
 }
