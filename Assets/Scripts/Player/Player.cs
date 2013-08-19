@@ -47,4 +47,15 @@ public class Player : MonoBehaviour {
     }
   }
 
+  private PlayerProgress _progress;
+  public PlayerProgress progress {
+    get {
+      if (_progress != null) {
+        return _progress;
+      }
+      _progress = new PlayerProgress(id);
+      return _progress;
+    }
+  }
+
 }

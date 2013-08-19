@@ -73,7 +73,7 @@ public class FA_Database : MonoBehaviour {
   public static void DeleteDB () {
     SetDBPath();
     CloseOut();
-    
+
     File.Delete(dbPath);
   }
 
@@ -88,6 +88,11 @@ public class FA_Database : MonoBehaviour {
     Debug.Log("Executing query " + sql);
     Instance.qr = new SQLiteQuery(Instance.db, sql);
     return Instance.qr;
+  }
+
+  public static void Execute (string sql) {
+    SQLiteQuery q = Query(sql);
+    q.Step();
   }
 
   public static ArrayList Extract (string q) {

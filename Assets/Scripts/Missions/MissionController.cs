@@ -9,6 +9,7 @@ public class MissionController : MonoBehaviour {
 
   private Player player;
   private Level level;
+  private Timer timer;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +17,17 @@ public class MissionController : MonoBehaviour {
     Time.timeScale = 1.0f;
 
     player = GameObject.Find("Player").GetComponent<Player>();
-    int level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
-    level = new Level(player.id, level_level);
-    level.IncrementAttempts();
+    timer = GameObject.Find("Timer").GetComponent<Timer>();
+    InitLevel();
 	}
-	
+
+  void InitLevel () {
+    int sector_level = int.Parse(Application.loadedLevelName.Split('-')[0]);
+    int level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
+    level = new Level(player, sector_level, level_level);
+    level.IncrementAttempts();
+  }
+
 	// Update is called once per frame
 	void Update () {
     if (Input.GetButtonDown("Cancel")) {
@@ -50,6 +57,7 @@ public class MissionController : MonoBehaviour {
 
   void OnShuttle () {
     ShowCompleteText();
+    level.SaveProgress(true, timer.Milliseconds());
     Time.timeScale = 0.1f;
     StartCoroutine(ExitLevel());
   }
