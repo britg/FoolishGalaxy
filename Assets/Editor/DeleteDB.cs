@@ -11,5 +11,6 @@ public class DeleteDB : ScriptableWizard
 	static void DoDeleteDB()
 	{
 		File.Delete(Application.persistentDataPath + "/foolish_galaxy.db");
+    Debug.Log("Replacing db");
 	}
 }

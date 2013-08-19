@@ -7,11 +7,18 @@ public class MissionController : MonoBehaviour {
   public GUIText deathTextPrefab;
   public GUIText trapText;
 
+  private Player player;
+  private Level level;
+
 	// Use this for initialization
 	void Start () {
     trapText.enabled = false;
     Time.timeScale = 1.0f;
-    FA_Database.Query("SELECT * from players");
+
+    player = GameObject.Find("Player").GetComponent<Player>();
+    int level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
+    level = new Level(player.id, level_level);
+    level.IncrementAttempts();
 	}
 	
 	// Update is called once per frame

@@ -12,8 +12,8 @@ public class TitleMenuController : MonoBehaviour {
   public GameObject levelLabelPrefab;
   public GameObject sectorLabelPrefab;
   public Vector2 currentLevelId = new Vector2(1, 2);
+  public Player player;
 
-  private Hashtable player;
   private ArrayList levels;
   private Vector2 levelLimits;
 
@@ -22,7 +22,6 @@ public class TitleMenuController : MonoBehaviour {
   private GameObject levelLabel;
 
   void Start () {
-    LoadPlayer();
     LoadLevels();
     GetLevelLimits();
 
@@ -76,11 +75,6 @@ public class TitleMenuController : MonoBehaviour {
     }
   }
 
-  void LoadPlayer () {
-    string q = "SELECT * FROM players WHERE last_active = 1 LIMIT 1";
-    player = FA_Database.ExtractOne(q);
-  }
-
   void LoadLevels () {
     string q = @"SELECT levels.name as level_name, 
                  levels.id as level_id, 
@@ -96,7 +90,7 @@ public class TitleMenuController : MonoBehaviour {
                     ON sectors.id = levels.sector_id
                  LEFT JOIN level_progress
                     ON level_progress.level_id = levels.id
-                    AND level_progress.player_id = " + player["id"] + @"
+                    AND level_progress.player_id = " + player.id + @"
                  ORDER BY sectors.level, levels.level";
     levels = FA_Database.Extract(q);
   }
@@ -155,6 +149,11 @@ public class TitleMenuController : MonoBehaviour {
 
     if (Input.GetButtonDown("Jump")) {
       Application.LoadLevel(currentLevelId.x + "-" + currentLevelId.y);
+    }
+
+    if (Input.GetButtonDown("Cancel")) {
+      FA_Database.DeleteDB();
+      Start();
     }
 
   }

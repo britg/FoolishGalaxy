@@ -11,8 +11,8 @@ public class FA_Database : MonoBehaviour {
   private static string dbPath = null;
   private static FA_Database instance;
 
-  SQLiteDB db = null;
-  SQLiteQuery qr = null;
+  private SQLiteDB db = null;
+  private SQLiteQuery qr = null;
 
   public static FA_Database Instance {
     get {
@@ -66,11 +66,14 @@ public class FA_Database : MonoBehaviour {
 
     using( FileStream fs = new FileStream(dbPath, FileMode.Create, FileAccess.Write) ) {
       fs.Write(bytes, 0, bytes.Length);
+      fs.Close();
     }
   }
 
   public static void DeleteDB () {
     SetDBPath();
+    CloseOut();
+    
     File.Delete(dbPath);
   }
 
@@ -128,9 +131,15 @@ public class FA_Database : MonoBehaviour {
   }
 
   void OnDestroy () {
+    CloseOut();
+  }
+
+  public static void CloseOut () {
     //Debug.Log("Releasing database");
     if (instance != null) {
-      //Instance.qr.Release();
+      if (Instance.qr != null) {
+        Instance.qr.Release();
+      }
       Instance.db.Close();
       instance = null;
     }

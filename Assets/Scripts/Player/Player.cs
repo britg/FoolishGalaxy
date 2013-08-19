@@ -28,9 +28,23 @@ public class Player : MonoBehaviour {
 
   public PlayerDirection facing = PlayerDirection.Right;
 
-
   public int JumpsRemaining () {
     return jumpCount - jumpsUsed;
+  }
+
+  private Hashtable _attributes;
+  public Hashtable attributes {
+    get {
+      string q = "SELECT * FROM players WHERE last_active = 1 LIMIT 1";
+      _attributes = FA_Database.ExtractOne(q);
+      return _attributes;
+    }
+  }
+
+  public int id {
+    get {
+      return (int)attributes["id"];
+    }
   }
 
 }
