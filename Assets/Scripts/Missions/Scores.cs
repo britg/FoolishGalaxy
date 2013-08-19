@@ -7,19 +7,13 @@ public class Scores : MonoBehaviour {
 
   string URL_BASE = "http://foolishaggro.com";
 
-  public Hashtable player;
-  public Hashtable levelScores;
+  public Player player;
 
   public delegate void SuccessHandler(string response);
   public delegate void ErrorHandler(string response);
 
   SuccessHandler onSuccess;
   ErrorHandler onError;
-
-  void Start () {
-    player = new Hashtable();
-    player["name"] = "Eezo";
-  }
 
   public void GetScoresForLevel (int level_id) {
     Hashtable scoresForLevel = new Hashtable();
@@ -32,6 +26,8 @@ public class Scores : MonoBehaviour {
 
   public void ScoresForLevelSuccess (string response) {
     Debug.Log("Response is " + response);
+    Hashtable data = MiniJSON.jsonDecode(response) as Hashtable;
+    NotificationCenter.PostNotification(this, "OnScoresForLevel", data);
   }
 
   public void Post (string endpoint, WWWForm formData) {
@@ -80,10 +76,10 @@ public class Scores : MonoBehaviour {
     Match match = Regex.Match(endpoint, @"\?", RegexOptions.IgnoreCase);
 
     if (match.Success) {
-      return endpoint + "&player_guid=" + player["name"];
+      return endpoint + "&player_guid=" + player.name;
     }
 
-    return endpoint + "?&player_guid=" + player["name"];
+    return endpoint + "?&player_guid=" + player.name;
   }
 
 }

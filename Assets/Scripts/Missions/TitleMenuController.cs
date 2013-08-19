@@ -26,10 +26,19 @@ public class TitleMenuController : MonoBehaviour {
   private Hashtable currentLevel;
   private GameObject levelLabel;
   private TitleMenuMode mode;
+  private Scores scores;
 
   void Start () {
-    playerNameLabel = GameObject.Find("Player Name").guiText;
+    SetMode();
+    GetCursor();
+    GetLevelLimits();
+    scores = GetComponent<Scores>();
+    scores.player = player;
+    RefreshDisplay();
+  }
 
+  void SetMode () {
+    playerNameLabel = GameObject.Find("Player Name").guiText;
     if (!player.exists) {
       mode = TitleMenuMode.Setup;
       introText.gameObject.SetActive(true);
@@ -42,10 +51,6 @@ public class TitleMenuController : MonoBehaviour {
       playerNameLabel.text = player.name;
       playerNameLabel.gameObject.SetActive(true);
     }
-
-    GetCursor();
-    GetLevelLimits();
-    RefreshDisplay();
   }
 
   void Update () {
@@ -104,6 +109,16 @@ public class TitleMenuController : MonoBehaviour {
   void RefreshDisplay () {
     GetCurrentLevel();
     DrawLevel();
+
+    scores.GetScoresForLevel((int)currentLevel["level_id"]);
+  }
+
+  void OnScoresForLevel (Notification note) {
+    Hashtable data = note.data;
+    ArrayList leaders = (ArrayList)data["leaders"];
+    foreach (Hashtable leader in leaders) {
+      Debug.Log("Leader is " + leader["player_guid"] + " at " + leader["milliseconds"]);
+    }
   }
 
   void DrawLevel () {
