@@ -23,6 +23,10 @@ public class Timer : MonoBehaviour {
     guiText.text = "Time " + TimeFormat(time);
   }
 
+  public static string TimeFormat (double _time) {
+    return TimeFormat((float)_time/1000.0f);
+  }
+
   public static string TimeFormat (int _time) {
     return TimeFormat((float)_time/1000.0f);
   }
@@ -33,7 +37,7 @@ public class Timer : MonoBehaviour {
       return "N/A";
     }
 
-    int ms = (int)Mathf.Round((_time % 1)*100);
+    int ms = (int)Mathf.Round((_time % 1)*10000);
     string mss = "" + ms;
     if (ms < 10){
       mss = "0" + ms;

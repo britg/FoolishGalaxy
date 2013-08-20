@@ -9,6 +9,15 @@ public class Level {
   public int sector_level;
   public int level_level;
 
+  public int id {
+    get {
+      if (progress == null) {
+        LoadProgress();
+      }
+      return (int)progress["level_id"];
+    }
+  }
+
   private Hashtable progress;
 
   public Level (Player _player, int _sector_level, int _level_level) {

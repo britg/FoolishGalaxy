@@ -10,6 +10,7 @@ public class MissionController : MonoBehaviour {
   private Player player;
   private Level level;
   private Timer timer;
+  private Scores scores;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,11 @@ public class MissionController : MonoBehaviour {
 
     player = GameObject.Find("Player").GetComponent<Player>();
     timer = GameObject.Find("Timer").GetComponent<Timer>();
+    scores = GetComponent<Scores>();
+    scores.player = player;
     InitLevel();
+
+    //scores.SetScoreForLevel(level.id, 1032);
 	}
 
   void InitLevel () {
@@ -58,8 +63,14 @@ public class MissionController : MonoBehaviour {
   void OnShuttle () {
     ShowCompleteText();
     level.SaveProgress(true, timer.Milliseconds());
+    scores.SetScoreForLevel(level.id, timer.Milliseconds());
     Time.timeScale = 0.1f;
-    StartCoroutine(ExitLevel());
+  }
+
+  void OnSetScoreForLevel () {
+    Debug.Log("Score successfully set for level");
+    NotificationCenter.PostNotification(this, "OnLevelExit");
+    Application.LoadLevel("Title");
   }
 
   IEnumerator ExitLevel () {

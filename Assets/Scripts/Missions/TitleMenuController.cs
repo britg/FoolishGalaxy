@@ -21,12 +21,14 @@ public class TitleMenuController : MonoBehaviour {
   public GUIText introText;
   public GUIText enteredName;
   public GUIText playerNameLabel;
+  public GameObject leaderTextPrefab;
 
   private Vector2 levelLimits;
   private Hashtable currentLevel;
   private GameObject levelLabel;
   private TitleMenuMode mode;
   private Scores scores;
+  private ArrayList leaderTexts;
 
   void Start () {
     SetMode();
@@ -110,15 +112,21 @@ public class TitleMenuController : MonoBehaviour {
     GetCurrentLevel();
     DrawLevel();
 
+    if (leaderTexts != null) {
+      foreach (GameObject lt in leaderTexts) {
+        Destroy(lt);
+      }
+    }
+
+    leaderTexts = new ArrayList();
+
     scores.GetScoresForLevel((int)currentLevel["level_id"]);
   }
 
   void OnScoresForLevel (Notification note) {
     Hashtable data = note.data;
-    ArrayList leaders = (ArrayList)data["leaders"];
-    foreach (Hashtable leader in leaders) {
-      Debug.Log("Leader is " + leader["player_guid"] + " at " + leader["milliseconds"]);
-    }
+
+    DrawScores(data);
   }
 
   void DrawLevel () {
@@ -158,6 +166,31 @@ public class TitleMenuController : MonoBehaviour {
       timeText.text = "Best time: " + Timer.TimeFormat((int)currentLevel["time"]);
     } else {
       timeText.text = "Best time: N/A";
+    }
+  }
+
+  // spacing is .03
+
+  void DrawScores (Hashtable scores) {
+    ArrayList leaders = (ArrayList)scores["leaders"];
+    GUIText leaderboardText = GameObject.Find("Leaderboard").gameObject.guiText;
+    leaderboardText.text = "Leaderboard";
+    int rank = 1;
+    float currY = -0.06f;
+    foreach (Hashtable leader in leaders) {
+      Debug.Log("Leader is " + leader["player_guid"] + " at " + leader["milliseconds"]);
+      GameObject leaderText = Instantiate(leaderTextPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+      leaderText.transform.parent = leaderboardText.transform;
+      leaderText.transform.localPosition = new Vector3(0, currY, 0);
+
+      string leaderName = leader["player_guid"].ToString();
+      string time = Timer.TimeFormat((double)leader["milliseconds"]);
+
+      leaderText.guiText.text = "#" + rank + " " + leaderName + " " + time;
+
+      leaderTexts.Add(leaderText);
+      rank++;
+      currY -= 0.03f;
     }
   }
 

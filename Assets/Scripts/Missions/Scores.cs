@@ -30,6 +30,27 @@ public class Scores : MonoBehaviour {
     NotificationCenter.PostNotification(this, "OnScoresForLevel", data);
   }
 
+  public void SetScoreForLevel (int level_id, int milliseconds) {
+    string endpoint = Endpoint("/scores.json");
+    WWWForm formData = new WWWForm();
+    formData.AddField("level_id", level_id);
+    formData.AddField("milliseconds", milliseconds);
+    WWW request = new WWW(endpoint, formData);
+    onSuccess = SetScoreForLevelSuccess;
+    onError = SetScoreForLevelFail;
+    StartCoroutine(Request(request));
+  }
+
+  void SetScoreForLevelSuccess (string response) {
+    Debug.Log("Set scores response " + response);
+    NotificationCenter.PostNotification(this, "OnSetScoreForLevel");
+  }
+
+  void SetScoreForLevelFail (string response) {
+    LogResponse(response);
+    NotificationCenter.PostNotification(this, "OnSetScoreForLevel");
+  }
+
   public void Post (string endpoint, WWWForm formData) {
     Post(endpoint, formData, LogResponse, LogResponse);
   }
