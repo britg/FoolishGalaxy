@@ -62,8 +62,13 @@ public class MissionController : MonoBehaviour {
 
   void OnShuttle () {
     ShowCompleteText();
-    level.SaveProgress(true, timer.Milliseconds());
-    scores.SetScoreForLevel(level.id, timer.Milliseconds());
+    bool betterTime = level.SaveProgress(true, timer.Milliseconds());
+    if (betterTime) {
+      Debug.Log("Better time recorded. sending to server");
+      scores.SetScoreForLevel(level.id, timer.Milliseconds());
+    } else {
+      StartCoroutine(ExitLevel());
+    }
     Time.timeScale = 0.1f;
   }
 

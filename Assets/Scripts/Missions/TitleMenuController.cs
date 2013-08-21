@@ -32,21 +32,22 @@ public class TitleMenuController : MonoBehaviour {
 
   void Start () {
     SetMode();
-    GetCursor();
-    GetLevelLimits();
-    scores = GetComponent<Scores>();
-    scores.player = player;
-    RefreshDisplay();
+
+    if (mode == TitleMenuMode.Play) {
+      GetCursor();
+      GetLevelLimits();
+      scores = GetComponent<Scores>();
+      scores.player = player;
+      RefreshDisplay();
+    }
   }
 
   void SetMode () {
-    playerNameLabel = GameObject.Find("Player Name").guiText;
     if (!player.exists) {
       mode = TitleMenuMode.Setup;
       introText.gameObject.SetActive(true);
       enteredName = introText.transform.Find("name_input").gameObject.guiText;
       playerNameLabel.gameObject.SetActive(false);
-      return;
     } else {
       mode = TitleMenuMode.Play;
       introText.gameObject.SetActive(false);

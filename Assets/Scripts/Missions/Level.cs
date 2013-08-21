@@ -53,10 +53,11 @@ public class Level {
     FA_Database.Execute(q);
   }
 
-  public void SaveProgress (bool completed, int milliseconds)  {
+  public bool SaveProgress (bool completed, int milliseconds)  {
     string q;
     int complete = (completed ? 1 : 0);
     int previousTime = 10000000;
+    bool betterTime = false;
 
     if (progress["level_progress_id"] != null) {
       if ((int)progress["time"] > 0) {
@@ -65,19 +66,26 @@ public class Level {
 
         if (previousTime < milliseconds) {
           milliseconds = previousTime;
+        } else {
+          betterTime = true;
         }
+      } else {
+        betterTime = true;
       }
       q = @"UPDATE level_progress
                    SET complete = " + complete + @",
                    time = " + milliseconds + @"
                    WHERE id = " + progress["level_progress_id"];
     } else {
+      betterTime = true;
       Debug.Log("Progress is new");
       q = @"INSERT INTO level_progress (player_id, level_id, complete, time)
                    VALUES (" + complete + ", " + milliseconds + ", 1)";
     }
 
     FA_Database.Execute(q);
+
+    return betterTime;
   }
 
 }
