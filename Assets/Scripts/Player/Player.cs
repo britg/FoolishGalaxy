@@ -32,6 +32,15 @@ public class Player : MonoBehaviour {
     return jumpCount - jumpsUsed;
   }
 
+  public float JumpUsedPercent () {
+    float perc = (float)jumpsUsed / (float)jumpCount;
+    return perc;
+  }
+
+  public float JumpRemainingPercent () {
+    return 1.0f - JumpUsedPercent();
+  }
+
   private Hashtable _attributes;
   public Hashtable attributes {
     get {

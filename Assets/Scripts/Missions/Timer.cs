@@ -58,17 +58,33 @@ public class Timer : MonoBehaviour {
     return min + ":" + sec + "." + mss;
   }
 
-  void OnShuttle () {
-    shouldUpdateTime = false;
-  }
-
-  void OnTrapSprung () {
-    shouldUpdateTime = true;
-  }
-
   public int Milliseconds () {
     Debug.Log(time*1000.0f);
     return (int)(time * 1000.0f);
+  }
+
+  void OnShuttle () {
+    StopTime();
+  }
+
+  void OnTrapSprung () {
+    StartTime();
+  }
+
+  void OnStartTime () {
+    StartTime();
+  }
+
+  void OnStopTime () {
+    StopTime();
+  }
+
+  void StartTime () {
+    shouldUpdateTime = true;
+  }
+
+  void StopTime () {
+    shouldUpdateTime = false;
   }
 
 }

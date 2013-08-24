@@ -12,20 +12,27 @@ public class JetpackDisplay : MonoBehaviour {
   private Vector3 playerSize;
   private Transform playerTransform;
 
+  private Vector3 lineEndAtFullPower;
+
 	// Use this for initialization
 	void Start () {
+	}
+
+  void Setup () {
     player = transform.parent.gameObject.GetComponent<Player>();
 
     playerSize = player.gameObject.renderer.bounds.size;
     playerTransform = player.gameObject.transform;
 
     VectorLine.Destroy(ref display);
-	}
+  }
+
 	
 	// Update is called once per frame
 	void LateUpdate () {
     if (shouldDisplay) {
       if (display == null) {
+        Setup();
         DrawDisplay();
       }
       UpdateDisplay();
@@ -39,54 +46,37 @@ public class JetpackDisplay : MonoBehaviour {
     widths[0] = 5.0f;
     display.SetWidths(widths);
     display.vectorObject.transform.parent = player.gameObject.transform;
+    UpdateDisplay();
   }
 
   Vector3 LineStart () {
-    Vector3 lineStart = Vector3.zero;
+    Vector3 lineStart = player.transform.position;
     lineStart.z -= 1;
     lineStart.x -= 11.5f;
     lineStart.y += 10.0f;
-
-    if (player.facing == PlayerDirection.Left) {
-      //lineStart.x += playerSize.x + 7.0f;
-    }
-
     return lineStart;
   }
 
   Vector3 LineEnd () {
-    Vector3 lineEnd = LineStart();
-    lineEnd.y += (playerSize.y / 2.0f) * UsedFactor();
-
-      lineEnd.x += 5 * UsedFactor();
-    if (player.facing == PlayerDirection.Left) {
-      //lineEnd.x -= 5 * UsedFactor();
-    } else {
-    }
-
-    return lineEnd;
+    lineEndAtFullPower = LineStart();
+    lineEndAtFullPower.y += (playerSize.y / 2.0f) * player.JumpRemainingPercent();
+    lineEndAtFullPower.x += 5 * player.JumpRemainingPercent();
+    
+    return lineEndAtFullPower;
   }
 
-  float UsedFactor () {
-    if (player.jumpsUsed == 1) {
-      return 0.5f;
-    } else if (player.jumpsUsed == 2) {
-      return 0.0f;
-    }
+  void SetUsedAmount () {
+    Vector3[] currentPoints = display.points3;
+    Vector3 start = currentPoints[0];
 
-    return 1.0f;
-  }
-
-  void SetPosition () {
-    Vector3[] newPoints = new Vector3[2];
-    newPoints[0] = LineStart();
-    newPoints[1] = LineEnd();
-    display.Resize(newPoints);
+    Vector3 newEnd = start + ((lineEndAtFullPower - start) * player.JumpRemainingPercent());
+    currentPoints[1] = newEnd;
+    display.Resize(currentPoints);
     display.Draw();
   }
 
   void UpdateDisplay () {
-    SetPosition();
+    SetUsedAmount();
     SetColor();
   }
 

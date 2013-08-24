@@ -15,7 +15,9 @@ public class GunController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    DetectInput();
+    if (canFire) {
+      DetectInput();
+    }
 	}
 
   void DetectInput () {

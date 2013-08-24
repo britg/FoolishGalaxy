@@ -117,18 +117,12 @@ public class JetpackController : MonoBehaviour {
   }
 
   void OnEnemyKill () {
-    Debug.Log("Jump's enemy kill");
     player.jumpsUsed = 0;
     JumpFrame();
   }
 
   void OnCollisionEnter (Collision collision) {
     ResetJumpState();
-  }
-
-  void OnJetpackPickup () {
-    Debug.Log("Jetpack picked up!");
-    canJump = true;
   }
 
 }
