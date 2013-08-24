@@ -57,7 +57,7 @@ public class JetpackController : MonoBehaviour {
     if (Input.GetButtonDown("Jump") && (player.jumpsUsed < player.jumpCount)) {
 
       shouldJump = true;
-      if ((jumpState != JumpState.Up) || (jumpPressTime > 0.01f)) {
+      if ((jumpState != JumpState.Up) || (jumpPressTime > 0.1f)) {
         shouldHalt = true;
         player.jumpsUsed++;
         jumpState = JumpState.Up;
@@ -86,7 +86,7 @@ public class JetpackController : MonoBehaviour {
   void UpdateJump () {
 
     if (shouldHalt) {
-      Halt();
+      //Halt();
       shouldHalt = false;
     }
 
@@ -111,6 +111,8 @@ public class JetpackController : MonoBehaviour {
   }
 
   void Halt () {
+    return;
+    Debug.Log("Halting!!");
     Vector3 currV = playerView.transform.rigidbody.velocity;
     currV.y = 0;
     playerView.transform.rigidbody.velocity = currV;

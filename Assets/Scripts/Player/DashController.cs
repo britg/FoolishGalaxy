@@ -19,6 +19,12 @@ public class DashController : MonoBehaviour {
   private bool shouldDash = false;
   private PlayerDirection dashDir;
 
+
+  private float currentDashCooldownTime = 0.0f;
+  private bool isCoolingDown = false;
+  private bool hasReleasedSinceLastDash = true;
+  private bool didJumpOut = false;
+
 	// Use this for initialization
 	void Start () {
     playerView = gameObject;
@@ -27,12 +33,16 @@ public class DashController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-    if (!canDash) return;
-
-    DetectInput();
+    if (canDash) {
+      DetectInput();
+    }
 
     if (isDashing()) {
       UpdateDashTimer();
+    }
+    
+    if (isCoolingDown) {
+      CoolDown();
     }
 	}
 
@@ -54,21 +64,29 @@ public class DashController : MonoBehaviour {
     float x = Input.GetAxis("Dash");
 
     if (x < -0.3f || Input.GetButtonDown("DashRight")) {
-      dashDir = PlayerDirection.Right;
-      shouldDash = true;
+      if (hasReleasedSinceLastDash) {
+        dashDir = PlayerDirection.Right;
+        shouldDash = true;
+        hasReleasedSinceLastDash = false;
+      }
     } else if (x > 0.3f || Input.GetButtonDown("DashLeft")) {
-      dashDir = PlayerDirection.Left;
-      shouldDash = true;
+      if (hasReleasedSinceLastDash) {
+        dashDir = PlayerDirection.Left;
+        shouldDash = true;
+        hasReleasedSinceLastDash = false;
+      }
     } else {
+      hasReleasedSinceLastDash = true;
       shouldDash = false;
     }
   }
 
   void Dash (PlayerDirection dir) {
-    Debug.Log("Dashing");
     if (currentDash != CurrentDash.None) {
       return;
     }
+
+    Debug.Log("Dashing");
 
     transform.rigidbody.velocity = Vector3.zero;
     Vector3 currV = playerView.transform.rigidbody.velocity;
@@ -105,8 +123,14 @@ public class DashController : MonoBehaviour {
   void EndDash () {
     currentDash = CurrentDash.None;
     currentDashTime = 0.0f;
-    player.transform.rigidbody.velocity = Vector3.zero;
+    if (!didJumpOut) {
+      //player.transform.rigidbody.velocity = Vector3.zero;
+    } else {
+      didJumpOut = false;
+    }
+    Debug.Log("Ending dash");
     NotificationCenter.PostNotification(this, Notification.DashEnd);
+    isCoolingDown = true;
   }
 
   void NotifyDashStart (PlayerDirection dir) {
@@ -116,9 +140,15 @@ public class DashController : MonoBehaviour {
   }
 
   void HoldVerticalPosition () {
-    Vector3 currP = player.transform.position;
-    currP.y = dashStartPosition.y;
-    player.transform.position = currP;
+    //Vector3 currP = player.transform.position;
+    //currP.y = dashStartPosition.y;
+    //player.transform.position = currP;
+
+    Vector3 currVelocity = player.rigidbody.velocity;
+    if (currVelocity.y < 0.0f) {
+      currVelocity.y = 0.0f;
+    }
+    player.rigidbody.velocity = currVelocity;
   }
 
   public bool isDashing () {
@@ -130,6 +160,18 @@ public class DashController : MonoBehaviour {
   }
 
   void OnJumpStart () {
+    didJumpOut = true;
+  }
+
+  void CoolDown () {
+    canDash = false;
+    currentDashCooldownTime += Time.deltaTime;
+    if (currentDashCooldownTime >= player.dashCooldown) {
+      Debug.Log("Dash cooldown ended");
+      currentDashCooldownTime = 0.0f;
+      isCoolingDown = false;
+      canDash = true;
+    }
   }
 
 }

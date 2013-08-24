@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
   public int dashCount = 1;
   public float dashForce = 50.0f;
   public float dashDuration = 0.3f;
+  public float dashCooldown = 0.5f;
 
   public float moveSpeed = 50.0f;
 

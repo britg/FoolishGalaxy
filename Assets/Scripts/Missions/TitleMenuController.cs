@@ -139,7 +139,7 @@ public class TitleMenuController : MonoBehaviour {
     levelLabelText.text = (string)currentLevel["level_name"];
 
     GUIText sectorLabelText = levelLabel.transform.Find("SectorLabel").gameObject.guiText;
-    sectorLabelText.text = (string)currentLevel["sector_name"];
+    sectorLabelText.text = "" + (int)currentLevel["sector_level"] + "-" + (int)currentLevel["level_level"];
 
     GUIText limitText = levelLabel.transform.Find("Limit").gameObject.guiText;
     limitText.text = (int)currentLevel["level_level"] + "/" + (int)levelLimits.y;
