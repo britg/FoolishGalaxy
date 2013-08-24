@@ -20,6 +20,8 @@ public class Player : MonoBehaviour {
   public float jumpForce = 50.0f;
   public float jumpDuration = 0.15f;
 
+  public float fireDuration = 0.1f;
+
   public int dashCount = 1;
   public float dashForce = 50.0f;
   public float dashDuration = 0.3f;

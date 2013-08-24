@@ -12,6 +12,9 @@ public class MissionController : MonoBehaviour {
   private Timer timer;
   private Scores scores;
 
+  private int sector_level;
+  private int level_level;
+
 	// Use this for initialization
 	void Start () {
     trapText.enabled = false;
@@ -22,13 +25,13 @@ public class MissionController : MonoBehaviour {
     scores = GetComponent<Scores>();
     scores.player = player;
     InitLevel();
-
+    LoadMissionSpecifics();
     //scores.SetScoreForLevel(level.id, 1032);
 	}
 
   void InitLevel () {
-    int sector_level = int.Parse(Application.loadedLevelName.Split('-')[0]);
-    int level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
+    sector_level = int.Parse(Application.loadedLevelName.Split('-')[0]);
+    level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
     level = new Level(player, sector_level, level_level);
     level.IncrementAttempts();
   }
@@ -95,5 +98,15 @@ public class MissionController : MonoBehaviour {
   IEnumerator RestartLevel () {
     yield return new WaitForSeconds(0.1f);
     Application.LoadLevel(Application.loadedLevelName);
+  }
+
+  void LoadMissionSpecifics () {
+    GameObject specifics = GameObject.Find("_MissionSpecifics");
+    if (specifics == null) {
+      return;
+    }
+
+    string scriptName = "Mission" + sector_level + "_" + level_level;
+    specifics.AddComponent(scriptName);
   }
 }
