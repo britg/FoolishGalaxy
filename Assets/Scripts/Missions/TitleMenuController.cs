@@ -16,14 +16,13 @@ public class TitleMenuController : MonoBehaviour {
 
   public GameObject levelLabelPrefab;
   public GameObject sectorLabelPrefab;
-  public Vector2 levelCursor;
+  public int levelCursor = 0;
   public Player player;
   public GUIText introText;
   public GUIText enteredName;
   public GUIText playerNameLabel;
   public GameObject leaderTextPrefab;
 
-  private Vector2 levelLimits;
   private Hashtable currentLevel;
   private GameObject levelLabel;
   private TitleMenuMode mode;
@@ -35,7 +34,6 @@ public class TitleMenuController : MonoBehaviour {
 
     if (mode == TitleMenuMode.Play) {
       GetCursor();
-      GetLevelLimits();
       scores = GetComponent<Scores>();
       scores.player = player;
       RefreshDisplay();
@@ -141,9 +139,6 @@ public class TitleMenuController : MonoBehaviour {
     GUIText sectorLabelText = levelLabel.transform.Find("SectorLabel").gameObject.guiText;
     sectorLabelText.text = "" + (int)currentLevel["sector_level"] + "-" + (int)currentLevel["level_level"];
 
-    GUIText limitText = levelLabel.transform.Find("Limit").gameObject.guiText;
-    limitText.text = (int)currentLevel["level_level"] + "/" + (int)levelLimits.y;
-
     GUIText completedText = levelLabel.transform.Find("Complete").gameObject.guiText;
 
     if (currentLevel["complete"] != null) {
@@ -195,21 +190,26 @@ public class TitleMenuController : MonoBehaviour {
     }
   }
 
-  void GetLevelLimits () {
-    levelLimits = player.progress.Bounds();
-  }
-
   void GetCurrentLevel () {
-    currentLevel = player.progress.For(levelCursor);
+    currentLevel = (Hashtable)player.progress.levels[levelCursor];
   }
 
   void NextLevel () {
-    levelCursor.y = Mathf.Clamp(levelCursor.y+1, 1, levelLimits.y);
+    if (levelCursor == player.progress.levels.Count) {
+      return;
+    }
+    levelCursor++;
+    currentLevel = (Hashtable)player.progress.levels[levelCursor];
     RefreshDisplay();
   }
 
   void PrevLevel () {
-    levelCursor.y = Mathf.Clamp(levelCursor.y-1, 1, levelLimits.y);
+    if (levelCursor == 0) {
+      return;
+    }
+
+    levelCursor--;
+    currentLevel = (Hashtable)player.progress.levels[levelCursor];
     RefreshDisplay();
   }
 
@@ -217,9 +217,11 @@ public class TitleMenuController : MonoBehaviour {
     levelCursor = player.progress.GetCursor();
   }
 
-  void SelectLevel (Vector2 cursor) {
-    player.progress.SetCursor(cursor);
-    Application.LoadLevel(cursor.x + "-" + cursor.y);
+  void SelectLevel (int cursor) {
+    Hashtable level = (Hashtable)player.progress.levels[cursor];
+    Vector2 setTo = new Vector2((int)level["sector_level"], (int)level["level_level"]);
+    player.progress.SetCursor(setTo);
+    Application.LoadLevel(setTo.x + "-" + setTo.y);
   }
 
 }

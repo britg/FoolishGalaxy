@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerProgress {
 
 	private int player_id;
-  private ArrayList levels;
+  public ArrayList levels;
 
   public PlayerProgress (int _player_id) {
     player_id = _player_id;
@@ -39,25 +39,8 @@ public class PlayerProgress {
     levels = FA_Database.Extract(q);
   }
 
-  public Vector2 Bounds () {
-    if (levels == null) {
-      LoadProgress();
-    }
-    Vector2 bounds = new Vector2(1, 1);
-    foreach (Hashtable level in levels) {
-      int sector = (int)level["sector_level"];
-      int level_level = (int)level["level_level"];
-
-      if (sector > bounds.x) {
-        bounds.x = sector;
-      }
-
-      if (level_level > bounds.y) {
-        bounds.y = level_level;
-      }
-    }
-
-    return bounds;
+  public Hashtable Bounds () {
+    return new Hashtable();
   }
 
   public Hashtable For (Vector2 lvl) {
@@ -103,20 +86,20 @@ public class PlayerProgress {
     FA_Database.Execute(q);
   }
 
-  public Vector2 GetCursor () {
+  public int GetCursor () {
     if (levels == null) {
       LoadProgress();
     }
 
-    Vector2 cursor = new Vector2(1, 1);
-    foreach (Hashtable level in levels) {
+    for (int cursor = 0; cursor < levels.Count; cursor++) {
+      Hashtable level = (Hashtable)levels[cursor];
       if (level["cursor"] != null && (int)level["cursor"] == 1) {
-        cursor = new Vector2((int)level["sector_level"], (int)level["level_level"]);
         return cursor;
       }
+
     }
 
-    return cursor;
+    return 0;
   }
 
 }
