@@ -30,6 +30,13 @@ public class MissionController : MonoBehaviour {
 	}
 
   void InitLevel () {
+
+    string levelName = Application.loadedLevelName;
+
+    if (!levelName.Contains("-")) {
+      return;
+    }
+
     sector_level = int.Parse(Application.loadedLevelName.Split('-')[0]);
     level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
     level = new Level(player, sector_level, level_level);
@@ -65,7 +72,10 @@ public class MissionController : MonoBehaviour {
 
   void OnShuttle () {
     ShowCompleteText();
-    bool betterTime = level.SaveProgress(true, timer.Milliseconds());
+    bool betterTime = false;
+    if (level != null) {
+      betterTime = level.SaveProgress(true, timer.Milliseconds());
+    }
     if (betterTime) {
       Debug.Log("Better time recorded. sending to server");
       scores.SetScoreForLevel(level.id, timer.Milliseconds());

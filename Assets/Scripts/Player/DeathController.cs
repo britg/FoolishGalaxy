@@ -3,6 +3,7 @@ using System.Collections;
 
 public class DeathController : MonoBehaviour {
 
+  public bool shouldFallToDeath = false;
   public bool diesOnLand = false;
   public bool deathPosted = false;
 
@@ -37,7 +38,9 @@ public class DeathController : MonoBehaviour {
   }
 
   void OnJumpStart () {
-    StartCoroutine(TurnOnDeath());
+    if (shouldFallToDeath) {
+      StartCoroutine(TurnOnDeath());
+    }
   }
 
   IEnumerator TurnOnDeath () {
