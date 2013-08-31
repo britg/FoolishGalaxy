@@ -28,6 +28,10 @@ public class MoveController : MonoBehaviour {
   void FixedUpdate () {
     if (moveInput.magnitude > 0) {
       MovePlayer(moveInput);
+    } else {
+      if (FAUtil.IsApproximately(playerView.transform.rigidbody.velocity.y, 0f)) {
+        StopPlayer();
+      }
     }
   }
 
@@ -66,6 +70,10 @@ public class MoveController : MonoBehaviour {
     Vector3 currVelocity = playerView.transform.rigidbody.velocity;
     currVelocity.x = (vector*player.moveSpeed).x;
     playerView.transform.rigidbody.velocity = currVelocity;
+  }
+
+  void StopPlayer () {
+    playerView.transform.rigidbody.velocity = Vector3.zero
   }
 
   void OnDashStart (Notification note) {
