@@ -5,18 +5,25 @@ public class CollisionCorrection : MonoBehaviour {
 
   private Vector2 raycastLength;
   private Vector3 playerCenter;
+  private Vector3 playerBottom;
+  private Vector3 playerTop;
   private Vector3 lastSafePosition;
+  private float margin = 0.0f;
 
   void Start () {
     raycastLength = new Vector2(0.0f, 0.0f);
-    raycastLength.x = renderer.bounds.size.x / 2.0f;
-    raycastLength.y = renderer.bounds.size.y / 2.0f;
+    raycastLength.x = renderer.bounds.size.x / 2.0f + margin;
+    raycastLength.y = renderer.bounds.size.y / 2.0f + margin;
     lastSafePosition = transform.position;
   }
 
   void LateUpdate () {
     playerCenter = transform.position;
-    playerCenter.y = playerCenter.y + raycastLength.y;
+    playerCenter.y = playerCenter.y + renderer.bounds.size.y/2;
+    playerBottom = transform.position;
+    playerTop = transform.position;
+    playerTop.y = playerTop.y + renderer.bounds.size.y;
+
     Vector3[] dirs = new Vector3[4];
     dirs[0] = Vector3.left;
     dirs[1] = Vector3.right;
@@ -58,12 +65,26 @@ public class CollisionCorrection : MonoBehaviour {
   }
 
   bool Check (Vector3 dir) {
-    //Debug.DrawRay(playerCenter, dir*raycastLength.x, Color.green, 0, false);
     RaycastHit hit;
 
+    // Center
+    Debug.DrawRay(playerCenter, dir*raycastLength.x, Color.green, 0, false);
     if (Physics.Raycast(playerCenter, dir, out hit, raycastLength.x)) {
       return !hit.collider.isTrigger;
     }
+
+    // Bottom
+    if (dir == Vector3.left || dir == Vector3.right) {
+      Debug.DrawRay(playerBottom, dir*raycastLength.x, Color.green, 0, false);
+      if (Physics.Raycast(playerCenter, dir, out hit, raycastLength.x)) {
+        return !hit.collider.isTrigger;
+      }
+      Debug.DrawRay(playerTop, dir*raycastLength.x, Color.green, 0, false);
+      if (Physics.Raycast(playerTop, dir, out hit, raycastLength.x)) {
+        return !hit.collider.isTrigger;
+      }
+    }
+
 
     return false;
   }

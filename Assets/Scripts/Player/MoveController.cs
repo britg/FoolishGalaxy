@@ -32,7 +32,6 @@ public class MoveController : MonoBehaviour {
   }
 
   void LateUpdate () {
-    //AvoidPassthrough();
   }
 
   void DetectMoveInput () {
