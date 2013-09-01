@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CollisionCorrection : MonoBehaviour {
 
+  public bool shouldCorrect = true;
+
   private Vector2 raycastLength;
   private Vector3 playerCenter;
   private Vector3 playerBottom;
@@ -18,6 +20,12 @@ public class CollisionCorrection : MonoBehaviour {
   }
 
   void LateUpdate () {
+    if (shouldCorrect) {
+      Correct();
+    }
+  }
+
+  void Correct () {
     playerCenter = transform.position;
     playerCenter.y = playerCenter.y + renderer.bounds.size.y/2;
     playerBottom = transform.position;
@@ -113,5 +121,13 @@ public class CollisionCorrection : MonoBehaviour {
       transform.rigidbody.velocity = velocity;
     } else {
     }
+  }
+
+  void OnBlackHoleCapture () {
+    shouldCorrect = false;
+  }
+
+  void OnBlackHoleRelease () {
+    shouldCorrect = true;
   }
 }

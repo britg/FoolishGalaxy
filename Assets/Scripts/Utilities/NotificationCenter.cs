@@ -13,6 +13,9 @@ class Notification {
   public static String DashStart = "OnDashStart";
   public static String DashEnd = "OnDashEnd";
 
+  public static string BlackHoleCapture = "OnBlackHoleCapture";
+  public static string BlackHoleRelease = "OnBlackHoleRelease";
+
   public Component sender;
   public String name;
   public Hashtable data;

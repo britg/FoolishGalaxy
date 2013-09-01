@@ -85,11 +85,6 @@ public class JetpackController : MonoBehaviour {
 
   void UpdateJump () {
 
-    if (shouldHalt) {
-      //Halt();
-      shouldHalt = false;
-    }
-
     if (shouldJump) {
       JumpFrame();
     }
@@ -110,20 +105,17 @@ public class JetpackController : MonoBehaviour {
     hasNotifiedStart = true;
   }
 
-  void Halt () {
-    return;
-    Debug.Log("Halting!!");
-    Vector3 currV = playerView.transform.rigidbody.velocity;
-    currV.y = 0;
-    playerView.transform.rigidbody.velocity = currV;
-  }
-
   void OnEnemyKill () {
     player.jumpsUsed = 0;
     JumpFrame();
   }
 
   void OnCollisionEnter (Collision collision) {
+    ResetJumpState();
+  }
+
+  void OnBlackHoleRelease () {
+    JumpFrame();
     ResetJumpState();
   }
 

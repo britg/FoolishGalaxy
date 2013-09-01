@@ -71,6 +71,8 @@ public class MissionController : MonoBehaviour {
   }
 
   void OnShuttle () {
+    StartCoroutine(RestartLevel());
+    return;
     ShowCompleteText();
     bool betterTime = false;
     if (level != null) {

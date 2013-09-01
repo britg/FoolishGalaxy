@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Follower : MonoBehaviour {
+public class FollowerController : MonoBehaviour {
 
   public bool shouldFollow = false;
   private Transform playerTransform;
