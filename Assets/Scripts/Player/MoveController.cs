@@ -12,6 +12,7 @@ public class MoveController : FAMonoBehaviour {
 
   private Vector3 moveInput;
   private Vector3 frameVelocity;
+  private Vector3 framePosition;
   private float spriteHeight;
 
 	// Use this for initialization
@@ -26,16 +27,19 @@ public class MoveController : FAMonoBehaviour {
       DetectMoveInput();
     }
     frameVelocity = transform.rigidbody.velocity;
-  }
+    framePosition = transform.position;
 
-  void FixedUpdate () {
     if (moveInput.magnitude > 0) {
       MovePlayer(moveInput);
     } else if (isGrounded) {
       StopPlayer();
     }
 
-    ApplyFrameVelocity();
+    //ApplyFrameVelocity();
+    ApplyFramePosition();
+  }
+
+  void FixedUpdate () {
   }
 
   void LateUpdate () {
@@ -69,7 +73,8 @@ public class MoveController : FAMonoBehaviour {
 
   public void MovePlayer (Vector3 input) {
     Vector3 vector = input * Time.deltaTime * player.moveSpeed;
-    frameVelocity.x = (vector*player.moveSpeed).x;
+    //frameVelocity.x = (vector*player.moveSpeed).x;
+    framePosition.x += input.x * Time.deltaTime * player.moveSpeed;
   }
 
   void StopPlayer () {
@@ -78,6 +83,10 @@ public class MoveController : FAMonoBehaviour {
 
   void ApplyFrameVelocity () {
     player.transform.rigidbody.velocity = frameVelocity;
+  }
+
+  void ApplyFramePosition () {
+    transform.position = framePosition;
   }
 
   void OnDashStart (Notification note) {

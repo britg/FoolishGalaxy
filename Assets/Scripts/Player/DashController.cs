@@ -18,6 +18,7 @@ public class DashController : MonoBehaviour {
   private Vector3 dashStartPosition;
   private bool shouldDash = false;
   private PlayerDirection dashDir;
+  private Vector3 framePosition;
 
 
   private float currentDashCooldownTime = 0.0f;
@@ -33,79 +34,77 @@ public class DashController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+    framePosition = transform.position;
+
     if (canDash) {
       DetectInput();
-    }
-
-    if (isDashing()) {
-      UpdateDashTimer();
     }
     
     if (isCoolingDown) {
       CoolDown();
     }
+
+    if (shouldDash) {
+      Dash(dashDir);
+      UpdateDashTimer();
+      HoldVerticalPosition();
+    }
+
+    transform.position = framePosition;
 	}
 
   void FixedUpdate () {
-    if (shouldDash) {
-      Dash(dashDir);
-    }
-
-    if (isDashing()) {
-      HoldVerticalPosition();
-    }
+    
   }
 
   void LateUpdate () {
-
+    if (shouldDash) {
+      //HoldVerticalPosition();
+      //transform.position = framePosition;
+    }
   }
 
   void DetectInput () {
     float x = Input.GetAxis("Dash");
 
     if (x < -0.3f || Input.GetButtonDown("DashRight")) {
-      if (hasReleasedSinceLastDash) {
-        dashDir = PlayerDirection.Right;
-        shouldDash = true;
+      if (hasReleasedSinceLastDash && !shouldDash && !isCoolingDown) {
+        StartDash(PlayerDirection.Right);
         hasReleasedSinceLastDash = false;
       }
     } else if (x > 0.3f || Input.GetButtonDown("DashLeft")) {
-      if (hasReleasedSinceLastDash) {
-        dashDir = PlayerDirection.Left;
-        shouldDash = true;
+      if (hasReleasedSinceLastDash && !shouldDash && !isCoolingDown) {
+        StartDash(PlayerDirection.Left);
         hasReleasedSinceLastDash = false;
       }
     } else {
       hasReleasedSinceLastDash = true;
-      shouldDash = false;
+    }
+  }
+
+  void StartDash (PlayerDirection dir) {
+    Debug.Log("Starting dash");
+    dashDir = dir;
+    StartDashTimer();
+    shouldDash = true;
+    NotifyDashStart(dashDir);
+    dashStartPosition = transform.position;
+    if (dir == PlayerDirection.Left) {
+      currentDash = CurrentDash.Left;
+    } else {
+      currentDash = CurrentDash.Right;
     }
   }
 
   void Dash (PlayerDirection dir) {
-    if (currentDash != CurrentDash.None) {
-      return;
-    }
-
-    Debug.Log("Dashing");
-
-    transform.rigidbody.velocity = Vector3.zero;
-    Vector3 currV = playerView.transform.rigidbody.velocity;
-    dashStartPosition = player.transform.position;
-
-    NotifyDashStart(dir);
-
+    //Debug.Log("Dashing");
 
     if (dir == PlayerDirection.Left) {
-      currentDash = CurrentDash.Left;
-      currV.x = -player.dashForce;
+      framePosition.x -= player.dashForce * Time.deltaTime;
     } else {
-      currentDash = CurrentDash.Right;
-      currV.x = player.dashForce;
+      framePosition.x += player.dashForce * Time.deltaTime;
     }
 
-    transform.rigidbody.velocity = currV;
-    StartDashTimer();
-    shouldDash = false;
   }
 
   void StartDashTimer () {
@@ -129,8 +128,10 @@ public class DashController : MonoBehaviour {
       didJumpOut = false;
     }
     Debug.Log("Ending dash");
+    player.transform.rigidbody.velocity = Vector3.zero;
     NotificationCenter.PostNotification(this, Notification.DashEnd);
     isCoolingDown = true;
+    shouldDash = false;
   }
 
   void NotifyDashStart (PlayerDirection dir) {
@@ -140,23 +141,13 @@ public class DashController : MonoBehaviour {
   }
 
   void HoldVerticalPosition () {
-    //Vector3 currP = player.transform.position;
-    //currP.y = dashStartPosition.y;
-    //player.transform.position = currP;
+    framePosition.y = dashStartPosition.y;
 
-    Vector3 currVelocity = player.rigidbody.velocity;
-    if (currVelocity.y < 0.0f) {
-      currVelocity.y = 0.0f;
-    }
-    player.rigidbody.velocity = currVelocity;
-  }
-
-  public bool isDashing () {
-    return currentDash != CurrentDash.None;
-  }
-
-  void OnEnemyKill () {
-    Debug.Log("Dash's enemy kill");
+    //Vector3 currVelocity = player.rigidbody.velocity;
+    //if (currVelocity.y < 0.0f) {
+      //currVelocity.y = 0.0f;
+    //}
+    //player.rigidbody.velocity = currVelocity;
   }
 
   void OnJumpStart () {
