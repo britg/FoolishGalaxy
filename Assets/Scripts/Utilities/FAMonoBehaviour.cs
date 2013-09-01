@@ -3,11 +3,11 @@ using System.Collections;
 
 public class FAMonoBehaviour : MonoBehaviour {
 
-  static float IsApproximately(float a, float b) {
-    return IsApproximately(a, b, 0.02);
+  protected static bool IsApproximately(float a, float b) {
+    return IsApproximately(a, b, 0.02f);
   }
 
-  static float IsApproximately(float a, float b, float tolerance) {
+  protected static bool IsApproximately(float a, float b, float tolerance) {
     return Mathf.Abs(a - b) < tolerance;
   }
 

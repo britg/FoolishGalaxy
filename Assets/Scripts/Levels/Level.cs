@@ -80,7 +80,7 @@ public class Level {
       betterTime = true;
       Debug.Log("Progress is new");
       q = @"INSERT INTO level_progress (player_id, level_id, complete, time)
-                   VALUES (" + complete + ", " + milliseconds + ", 1)";
+                   VALUES (" + complete + ", " + milliseconds + ", 1, " + milliseconds + ")";
     }
 
     FA_Database.Execute(q);

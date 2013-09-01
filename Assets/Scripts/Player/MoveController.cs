@@ -1,15 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class MoveController : MonoBehaviour {
+public class MoveController : FAMonoBehaviour {
 
   private GameObject playerView;
   private Player player;
 
   private bool isDashing = false;
+  private bool isGrounded = true;
   private bool canMove = true;
 
   private Vector3 moveInput;
+  private Vector3 frameVelocity;
   private float spriteHeight;
 
 	// Use this for initialization
@@ -23,16 +25,17 @@ public class MoveController : MonoBehaviour {
     if (canMove) {
       DetectMoveInput();
     }
+    frameVelocity = transform.rigidbody.velocity;
   }
 
   void FixedUpdate () {
     if (moveInput.magnitude > 0) {
       MovePlayer(moveInput);
-    } else {
-      if (FAUtil.IsApproximately(playerView.transform.rigidbody.velocity.y, 0f)) {
-        StopPlayer();
-      }
+    } else if (isGrounded) {
+      StopPlayer();
     }
+
+    ApplyFrameVelocity();
   }
 
   void LateUpdate () {
@@ -66,13 +69,15 @@ public class MoveController : MonoBehaviour {
 
   public void MovePlayer (Vector3 input) {
     Vector3 vector = input * Time.deltaTime * player.moveSpeed;
-    Vector3 currVelocity = playerView.transform.rigidbody.velocity;
-    currVelocity.x = (vector*player.moveSpeed).x;
-    playerView.transform.rigidbody.velocity = currVelocity;
+    frameVelocity.x = (vector*player.moveSpeed).x;
   }
 
   void StopPlayer () {
-    playerView.transform.rigidbody.velocity = Vector3.zero
+    frameVelocity.x = 0;
+  }
+
+  void ApplyFrameVelocity () {
+    player.transform.rigidbody.velocity = frameVelocity;
   }
 
   void OnDashStart (Notification note) {
