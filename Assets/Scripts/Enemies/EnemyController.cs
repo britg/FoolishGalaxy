@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyController : MonoBehaviour {
+public class EnemyController : FAMonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MissionController : MonoBehaviour {
+public class MissionController : FAMonoBehaviour {
 
   public GUIText completeTextPrefab;
   public GUIText deathTextPrefab;
