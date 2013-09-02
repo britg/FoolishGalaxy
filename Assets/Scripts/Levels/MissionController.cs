@@ -33,7 +33,7 @@ public class MissionController : MonoBehaviour {
 
     string levelName = Application.loadedLevelName;
 
-    if (!levelName.Contains("-")) {
+    if (!levelName.Contains("Level")) {
       return;
     }
 
