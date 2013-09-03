@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mission1_3 : MissionSpecifics {
+public class LevelCustomization1_3 : LevelCustomizationBase {
 
 	void Start () {
     base.Start();

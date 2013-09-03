@@ -5,13 +5,13 @@ using System.Collections;
 
 class Notification {
 
-  public static String PlayerCollision = "OnPlayerCollision";
-  public static String EnemyKill = "OnEnemyKill";
+  public static string PlayerCollision = "OnPlayerCollision";
+  public static string EnemyKill = "OnEnemyKill";
 
-  public static String JumpStart = "OnJumpStart";
+  public static string JumpStart = "OnJumpStart";
 
-  public static String DashStart = "OnDashStart";
-  public static String DashEnd = "OnDashEnd";
+  public static string DashStart = "OnDashStart";
+  public static string DashEnd = "OnDashEnd";
 
   public static string BlackHoleCapture = "OnBlackHoleCapture";
   public static string BlackHoleRelease = "OnBlackHoleRelease";

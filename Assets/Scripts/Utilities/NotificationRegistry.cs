@@ -14,6 +14,10 @@ public class NotificationRegistry : MonoBehaviour {
 
 	}
 
+  public void AddObserver (string note) {
+
+  }
+
 	// Update is called once per frame
 	void Update () {
 

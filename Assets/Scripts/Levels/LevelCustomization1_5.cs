@@ -1,17 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mission1_2 : MissionSpecifics {
+public class LevelCustomization1_5 : LevelCustomizationBase {
 
-	void Start () {
+  void Start () {
     base.Start();
-
-    DisableGun();
     DisableDash();
 	}
 
-  void OnJumpStart () {
+  void OnDashPickup () {
+    EnableDash();
     NotificationCenter.PostNotification(this, "OnStartTime");
   }
-	
 }

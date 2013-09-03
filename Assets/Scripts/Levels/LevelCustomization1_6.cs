@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mission2_1 : MissionSpecifics {
+public class LevelCustomization1_6 : LevelCustomizationBase {
 
   void Start () {
     base.Start();
 	}
 
-  void OnArtifactPickup () {
+  void OnJumpStart () {
     NotificationCenter.PostNotification(this, "OnStartTime");
   }
 }

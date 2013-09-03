@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System;
+using System.Reflection;
 
 public class FGBaseController : FAMonoBehaviour {
 
@@ -20,5 +22,17 @@ public class FGBaseController : FAMonoBehaviour {
 
   public static bool Atomized (Collider collider) {
     return collider.gameObject.name == gunfireName;
+  }
+
+  public void RegisterFGNotifications () {
+    Type noteType = typeof(Notification);
+    FieldInfo[] noteFields = noteType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+
+    foreach (FieldInfo field in noteFields) {
+      string noteName = field.GetValue(noteType).ToString();
+      log(noteName);
+      NotificationCenter.AddObserver(this, noteName);
+    }
+
   }
 }

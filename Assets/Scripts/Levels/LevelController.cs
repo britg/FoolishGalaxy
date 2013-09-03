@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MissionController : FGBaseController {
+public class LevelController : FGBaseController {
 
   public GUIText completeTextPrefab;
   public GUIText deathTextPrefab;
@@ -61,7 +61,7 @@ public class MissionController : FGBaseController {
   }
 
   void OnTrapSprung () {
-    Debug.Log("On trap sprung");
+    log("On trap sprung");
     trapText.enabled = true;
     StartCoroutine(HideTrapText());
   }
@@ -80,7 +80,7 @@ public class MissionController : FGBaseController {
       betterTime = level.SaveProgress(true, timer.Milliseconds());
     }
     if (betterTime) {
-      Debug.Log("Better time recorded. sending to server");
+      log("Better time recorded. sending to server");
       scores.SetScoreForLevel(level.id, timer.Milliseconds());
     } else {
       StartCoroutine(ExitLevel());
@@ -89,7 +89,7 @@ public class MissionController : FGBaseController {
   }
 
   void OnSetScoreForLevel () {
-    Debug.Log("Score successfully set for level");
+    log("Score successfully set for level");
     NotificationCenter.PostNotification(this, "OnLevelExit");
     Application.LoadLevel("Title");
   }
@@ -102,7 +102,7 @@ public class MissionController : FGBaseController {
 
   void OnDeath (Notification note) {
     Enemy enemy = note.data["enemy"] as Enemy;
-    Debug.Log("On Death from Mission Controller");
+    log("On Death from Mission Controller");
     ShowDeathText(enemy.deathText);
     Time.timeScale = 0.1f;
     StartCoroutine(RestartLevel());
@@ -119,7 +119,7 @@ public class MissionController : FGBaseController {
       return;
     }
 
-    string scriptName = "Mission" + sector_level + "_" + level_level;
+    string scriptName = "LevelCustomization" + sector_level + "_" + level_level;
     specifics.AddComponent(scriptName);
   }
 }

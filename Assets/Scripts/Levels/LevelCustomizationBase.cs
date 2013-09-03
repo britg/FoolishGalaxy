@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MissionSpecifics : MonoBehaviour {
+public class LevelCustomizationBase : MonoBehaviour {
 
   protected JetpackController jetPackController;
   protected JetpackDisplay jetPackDisplay;
