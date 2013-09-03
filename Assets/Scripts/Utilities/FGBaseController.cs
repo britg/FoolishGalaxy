@@ -2,10 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class FGBaseController : FAMonoBehaviour {
-  
+
   public static string playerName = "Player";
   public static string gunfireName = "Gunfire";
-  
+
+  public static Player GetPlayer () {
+    return GameObject.Find(playerName).GetComponent<Player>();
+  }
+
   public static bool IsPlayer (Collider collider) {
     return IsPlayer(collider.gameObject);
   }

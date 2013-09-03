@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MissionController : FAMonoBehaviour {
+public class MissionController : FGBaseController {
 
   public GUIText completeTextPrefab;
   public GUIText deathTextPrefab;
@@ -20,13 +20,14 @@ public class MissionController : FAMonoBehaviour {
     trapText.enabled = false;
     Time.timeScale = 1.0f;
 
-    player = GameObject.Find("Player").GetComponent<Player>();
+    player = GetPlayer();
     timer = GameObject.Find("Timer").GetComponent<Timer>();
+
     scores = GetComponent<Scores>();
     scores.player = player;
-    InitLevel();
+
+    //InitLevel();
     LoadMissionSpecifics();
-    //scores.SetScoreForLevel(level.id, 1032);
 	}
 
   void InitLevel () {

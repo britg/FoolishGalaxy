@@ -11,7 +11,7 @@ public enum PlayerDirection {
 }
 
 
-public class Player : MonoBehaviour {
+public class Player : FAMonoBehaviour {
 
   public int hitCount = 1;
 

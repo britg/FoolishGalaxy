@@ -221,7 +221,7 @@ public class TitleMenuController : MonoBehaviour {
     Hashtable level = (Hashtable)player.progress.levels[cursor];
     Vector2 setTo = new Vector2((int)level["sector_level"], (int)level["level_level"]);
     player.progress.SetCursor(setTo);
-    Application.LoadLevel(setTo.x + "-" + setTo.y);
+    Application.LoadLevel("Level " + setTo.x + "-" + setTo.y);
   }
 
 }
