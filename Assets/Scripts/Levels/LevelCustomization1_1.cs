@@ -14,7 +14,7 @@ public class LevelCustomization1_1 : LevelCustomizationBase {
 
   void OnJetpackPickup () {
     EnableJetPack();
-    NotificationCenter.PostNotification(this, "OnStartTime");
+    NotificationCenter.PostNotification(this, Notification.StartTime);
   }
 
 }

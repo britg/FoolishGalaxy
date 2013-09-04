@@ -3,17 +3,21 @@ using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 
-public class Scores : MonoBehaviour {
+public class ScoresController : FGBaseController {
 
   string URL_BASE = "http://foolishaggro.com";
 
-  public Player player;
+  private Player player;
 
   public delegate void SuccessHandler(string response);
   public delegate void ErrorHandler(string response);
 
   SuccessHandler onSuccess;
   ErrorHandler onError;
+
+  void Start () {
+    GetPlayer();
+  }
 
   public void GetScoresForLevel (int level_id) {
     Hashtable scoresForLevel = new Hashtable();

@@ -5,6 +5,17 @@ using System.Collections;
 
 class Notification {
 
+  public static string StartTime = "OnStartTime";
+
+  public static string LevelWin = "OnLevelWin";
+  public static string LevelExit = "OnLevelExit";
+
+  public static string PlayerDeath = "OnPlayerDeath";
+
+  public static string TrapActivated = "OnTrapActivated";
+
+  public static string SetScoreForLevel = "OnSetScoreForLevel";
+
   public static string PlayerCollision = "OnPlayerCollision";
   public static string EnemyKill = "OnEnemyKill";
 
@@ -12,6 +23,8 @@ class Notification {
 
   public static string DashStart = "OnDashStart";
   public static string DashEnd = "OnDashEnd";
+
+  public static string JetpackPickup = "OnJetpackPickup";
 
   public static string BlackHoleCapture = "OnBlackHoleCapture";
   public static string BlackHoleRelease = "OnBlackHoleRelease";
@@ -40,7 +53,7 @@ public class NotificationCenter : MonoBehaviour
   private static NotificationCenter instance;
 
 
-  Hashtable notifications = new Hashtable();
+  public Hashtable notifications = new Hashtable();
 
   public static NotificationCenter Instance
     {
@@ -75,9 +88,9 @@ public class NotificationCenter : MonoBehaviour
 
     ArrayList notifyList = (ArrayList)Instance.notifications[name];
 
-    if(!notifyList.Contains(observer))
+    if(!notifyList.Contains(observer.gameObject))
     {
-      notifyList.Add(observer);
+      notifyList.Add(observer.gameObject);
     }
 
   }
@@ -89,9 +102,9 @@ public class NotificationCenter : MonoBehaviour
 
     if(notifyList != null)
     {
-      if(notifyList.Contains(observer))
+      if(notifyList.Contains(observer.gameObject))
       {
-        notifyList.Remove(observer);
+        notifyList.Remove(observer.gameObject);
       }
       if(notifyList.Count == 0)
       {
@@ -128,21 +141,21 @@ public class NotificationCenter : MonoBehaviour
 
     ArrayList observersToRemove = new ArrayList();
 
-    foreach( Component observer in notifyList)
+    foreach( GameObject observerGameObject in notifyList)
     {
-      if(!observer)
+      if(!observerGameObject)
       {
-        observersToRemove.Add(observer);
+        observersToRemove.Add(observerGameObject);
       }
       else
       {
-        observer.SendMessage(aNotification.name, aNotification, SendMessageOptions.DontRequireReceiver);
+        observerGameObject.SendMessage(aNotification.name, aNotification, SendMessageOptions.DontRequireReceiver);
       }
     }
 
-    foreach( object observer in observersToRemove)
+    foreach( object observerGameObject in observersToRemove)
     {
-      notifyList.Remove(observer);
+      notifyList.Remove(observerGameObject);
     }
   }
 }

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PickupController : MonoBehaviour {
 
-  public bool shouldSpringTrap = true;
+  public bool shouldActivateTrap = true;
+  public bool shouldStartTime = true;
 
   public string notificationName;
 
@@ -14,12 +15,12 @@ public class PickupController : MonoBehaviour {
       NotificationCenter.PostNotification(this, notificationName);
     }
 
-    if (shouldSpringTrap) {
-      SpringTrap();
+    if (shouldActivateTrap) {
+      ActivateTrap();
     }
   }
 
-  void SpringTrap () {
-    NotificationCenter.PostNotification(this, "OnTrapSprung");
+  void ActivateTrap () {
+    NotificationCenter.PostNotification(this, Notification.TrapActivated);
   }
 }

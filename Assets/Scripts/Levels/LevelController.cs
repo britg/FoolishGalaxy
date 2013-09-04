@@ -10,7 +10,7 @@ public class LevelController : FGBaseController {
   private Player player;
   private Level level;
   private Timer timer;
-  private Scores scores;
+  private ScoresController scores;
 
   private int sector_level;
   private int level_level;
@@ -23,11 +23,12 @@ public class LevelController : FGBaseController {
     player = GetPlayer();
     timer = GameObject.Find("Timer").GetComponent<Timer>();
 
-    scores = GetComponent<Scores>();
-    scores.player = player;
+    scores = GetComponent<ScoresController>();
 
-    //InitLevel();
-    LoadMissionSpecifics();
+    InitLevel();
+    RegisterFGNotifications();
+
+    Invoke("DebugNotificationCenter", 1f);
 	}
 
   void InitLevel () {
@@ -38,16 +39,21 @@ public class LevelController : FGBaseController {
       return;
     }
 
-    sector_level = int.Parse(Application.loadedLevelName.Split('-')[0]);
-    level_level = int.Parse(Application.loadedLevelName.Split('-')[1]);
+    string levelParts = levelName.Split(' ')[1];
+
+    sector_level = int.Parse(levelParts.Split('-')[0]);
+    level_level = int.Parse(levelParts.Split('-')[1]);
+
     level = new Level(player, sector_level, level_level);
     level.IncrementAttempts();
+
+    LoadCustomizationForLevel();
   }
 
 	// Update is called once per frame
 	void Update () {
     if (Input.GetButtonDown("Cancel")) {
-      StartCoroutine(ExitLevel());
+      Invoke("ExitLevel", 0.2f);
     }
 	}
 
@@ -60,20 +66,22 @@ public class LevelController : FGBaseController {
     deathText.text = "<color=red>" + text + "</color>";
   }
 
-  void OnTrapSprung () {
-    log("On trap sprung");
+  void OnTrapActivated () {
+    log("On trap sprung in level controller");
     trapText.enabled = true;
-    StartCoroutine(HideTrapText());
+    Invoke("HideTrapText", 2f);
   }
 
-  IEnumerator HideTrapText () {
-    yield return new WaitForSeconds(2.0f);
+  void HideTrapText () {
     trapText.enabled = false;
   }
 
-  void OnShuttle () {
-    StartCoroutine(RestartLevel());
+  void OnLevelWin () {
+
+    // TEMP
+    Invoke("RestartLevel", 0.1f);
     return;
+
     ShowCompleteText();
     bool betterTime = false;
     if (level != null) {
@@ -83,43 +91,36 @@ public class LevelController : FGBaseController {
       log("Better time recorded. sending to server");
       scores.SetScoreForLevel(level.id, timer.Milliseconds());
     } else {
-      StartCoroutine(ExitLevel());
+      Invoke("ExitLevel", 0.2f);
     }
     Time.timeScale = 0.1f;
   }
 
   void OnSetScoreForLevel () {
     log("Score successfully set for level");
-    NotificationCenter.PostNotification(this, "OnLevelExit");
+    NotificationCenter.PostNotification(this, Notification.LevelExit);
     Application.LoadLevel("Title");
   }
 
-  IEnumerator ExitLevel () {
-    NotificationCenter.PostNotification(this, "OnLevelExit");
-    yield return new WaitForSeconds(.2f);
+  void ExitLevel () {
+    NotificationCenter.PostNotification(this, Notification.LevelExit);
     Application.LoadLevel("Title");
   }
 
-  void OnDeath (Notification note) {
+  void OnPlayerDeath (Notification note) {
     Enemy enemy = note.data["enemy"] as Enemy;
     log("On Death from Mission Controller");
     ShowDeathText(enemy.deathText);
     Time.timeScale = 0.1f;
-    StartCoroutine(RestartLevel());
+    Invoke("RestartLevel", 0.1f);
   }
 
-  IEnumerator RestartLevel () {
-    yield return new WaitForSeconds(0.1f);
+  void RestartLevel () {
     Application.LoadLevel(Application.loadedLevelName);
   }
 
-  void LoadMissionSpecifics () {
-    GameObject specifics = GameObject.Find("_MissionSpecifics");
-    if (specifics == null) {
-      return;
-    }
-
+  void LoadCustomizationForLevel () {
     string scriptName = "LevelCustomization" + sector_level + "_" + level_level;
-    specifics.AddComponent(scriptName);
+    gameObject.AddComponent(scriptName);
   }
 }

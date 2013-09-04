@@ -26,7 +26,7 @@ public class TitleMenuController : MonoBehaviour {
   private Hashtable currentLevel;
   private GameObject levelLabel;
   private TitleMenuMode mode;
-  private Scores scores;
+  private ScoresController scores;
   private ArrayList leaderTexts;
 
   void Start () {
@@ -34,8 +34,7 @@ public class TitleMenuController : MonoBehaviour {
 
     if (mode == TitleMenuMode.Play) {
       GetCursor();
-      scores = GetComponent<Scores>();
-      scores.player = player;
+      scores = GetComponent<ScoresController>();
       RefreshDisplay();
     }
   }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LevelCustomizationBase : MonoBehaviour {
+public class LevelCustomizationBase : FGBaseController {
 
   protected JetpackController jetPackController;
   protected JetpackDisplay jetPackDisplay;
@@ -16,6 +16,8 @@ public class LevelCustomizationBase : MonoBehaviour {
     jetPackDisplay = jetPack.GetComponent<JetpackDisplay>();
     gunController = player.GetComponent<GunController>();
     dashController = player.GetComponent<DashController>();
+
+    RegisterFGNotifications();
 	}
 
   protected void DisableJetPack () {
