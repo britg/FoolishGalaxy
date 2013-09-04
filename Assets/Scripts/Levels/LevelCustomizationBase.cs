@@ -9,7 +9,7 @@ public class LevelCustomizationBase : FGBaseController {
   protected DashController dashController;
 
 	// Use this for initialization
-	protected void Start () {
+  protected void Start () {
     GameObject player = GameObject.Find("Player");
     jetPackController = player.GetComponent<JetpackController>();
     GameObject jetPack = player.transform.Find("JetpackDisplay").gameObject;
@@ -18,7 +18,7 @@ public class LevelCustomizationBase : FGBaseController {
     dashController = player.GetComponent<DashController>();
 
     RegisterFGNotifications();
-	}
+  }
 
   protected void DisableJetPack () {
     jetPackController.canJump = false;
