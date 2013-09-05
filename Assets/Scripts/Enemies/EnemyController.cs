@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyController : FAMonoBehaviour {
+public class EnemyController : FGBaseController {
+
+  public Enemy enemy;
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
@@ -14,16 +16,19 @@ public class EnemyController : FAMonoBehaviour {
 	}
 
   void OnCollisionEnter (Collision collision) {
-    if (collision.gameObject.tag == "GunFire") {
-      Destroy(gameObject);
+    if (Atomized(collision)) {
+      ReactToAttack();
     }
   }
 
   void OnTriggerEnter (Collider collider) {
-    Debug.Log("Enemy trigger enter");
-    if (collider.tag == "GunFire") {
-      Destroy(gameObject);
-      NotificationCenter.PostNotification(this, "OnEnemyKill");
+    if (Atomized(collider)) {
+      ReactToAttack();
     }
+  }
+
+  void ReactToAttack () {
+    Destroy(gameObject);
+    NotificationCenter.PostNotification(this, Notification.EnemyKill);
   }
 }

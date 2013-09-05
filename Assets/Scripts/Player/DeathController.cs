@@ -23,7 +23,13 @@ public class DeathController : MonoBehaviour {
 
   void OnCollisionEnter (Collision collision) {
     GameObject obj = collision.gameObject;
-    Enemy enemy = obj.GetComponent<Enemy>();
+    EnemyController enemyController = obj.GetComponent<EnemyController>();
+
+    if (enemyController == null) {
+      return;
+    }
+
+    Enemy enemy = enemyController.enemy;
     if (enemy != null && enemy.killOnContact) {
       Debug.Log("Ran into an enemy! " + obj);
       Hashtable data = new Hashtable();
@@ -34,7 +40,7 @@ public class DeathController : MonoBehaviour {
 
   void PostDeath (Hashtable data) {
     deathPosted = true;
-    NotificationCenter.PostNotification(this, "OnDeath", data);
+    NotificationCenter.PostNotification(this, Notification.PlayerDeath, data);
   }
 
   void OnJumpStart () {

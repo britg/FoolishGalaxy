@@ -1,18 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour {
+[System.Serializable]
+public class Enemy {
 
   public string deathText = "Death";
   public bool killOnContact = true;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

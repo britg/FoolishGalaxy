@@ -14,7 +14,6 @@ GameObject:
   - 65: {fileID: 6500000}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400004}
   - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: Asteroid
@@ -122,18 +121,6 @@ MonoBehaviour:
   rotation: 1
   rotationPeriod: 100
   rotationAxis: {x: 0, y: 0, z: 1}
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9c6a8f6af96f40b7f7d06167f4b4f, type: 3}
-  m_Name: 
-  deathText: "An asteroid pierces \r\nyour suit. \r\nYou suffocate to death."
-  killOnContact: 1
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +131,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cca83f10f9392349a72e0b9f5e5106d, type: 3}
   m_Name: 
+  enemy:
+    deathText: Death
+    killOnContact: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

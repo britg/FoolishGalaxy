@@ -26,6 +26,10 @@ public class FGBaseController : FAMonoBehaviour {
     return collider.gameObject.name == gunfireName;
   }
 
+  public static bool Atomized (Collision collision) {
+    return collision.gameObject.name == gunfireName;
+  }
+
   public void RegisterFGNotifications () {
 
     Type noteType = typeof(Notification);

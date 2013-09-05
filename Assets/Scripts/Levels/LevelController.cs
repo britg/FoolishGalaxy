@@ -27,8 +27,6 @@ public class LevelController : FGBaseController {
 
     InitLevel();
     RegisterFGNotifications();
-
-    Invoke("DebugNotificationCenter", 1f);
 	}
 
   void InitLevel () {
@@ -67,7 +65,7 @@ public class LevelController : FGBaseController {
   }
 
   void OnTrapActivated () {
-    log("On trap sprung in level controller");
+    log("On trap activated in level controller");
     trapText.enabled = true;
     Invoke("HideTrapText", 2f);
   }

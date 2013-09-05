@@ -16,7 +16,8 @@ public class ScoresController : FGBaseController {
   ErrorHandler onError;
 
   void Start () {
-    GetPlayer();
+    log ("Start for Scores Controller");
+    player = GetPlayer();
   }
 
   public void GetScoresForLevel (int level_id) {
@@ -97,6 +98,7 @@ public class ScoresController : FGBaseController {
   }
 
   string Endpoint (string endpoint) {
+    log ("Building endpoint in Scores Controller");
     endpoint = URL_BASE + endpoint;
     Match match = Regex.Match(endpoint, @"\?", RegexOptions.IgnoreCase);
 

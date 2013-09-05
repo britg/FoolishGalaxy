@@ -1,18 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class MonsterController : MonoBehaviour {
+public class MonsterController : FGBaseController {
 
   public bool shouldChase = false;
   public float speed = 10;
 
   private Transform playerTransform;
-  private Enemy enemy;
 
 	// Use this for initialization
 	void Start () {
     playerTransform = GameObject.Find("Player").transform;
-    enemy = gameObject.GetComponent<Enemy>();
 	}
 	
 	// Update is called once per frame
@@ -29,7 +27,7 @@ public class MonsterController : MonoBehaviour {
     transform.position = currPos;
   }
 
-  void OnTrapSprung () {
+  void OnTrapActivated () {
     shouldChase = true;
   }
 }

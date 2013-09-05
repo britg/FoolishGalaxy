@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class FollowerController : MonoBehaviour {
+public class FollowerController : EnemyController {
+
+  public Follower follower;
 
   public bool shouldFollow = false;
   private Transform playerTransform;
-  public float speed = 9.0f;
 
 	// Use this for initialization
 	void Start () {
-    playerTransform = GameObject.Find("Player").transform;
+    Player player = GetPlayer();
+    playerTransform = player.transform;
+    RegisterFGNotifications();
 	}
 
-  void OnArtifactPickup () {
+  void OnTrapActivated () {
     shouldFollow = true;
   }
 
@@ -25,7 +28,7 @@ public class FollowerController : MonoBehaviour {
   void Follow () {
     Vector3 toPlayer = playerTransform.position - transform.position;
     Vector3 dir = toPlayer.normalized;
-    Vector3 move = dir * Time.deltaTime * speed;
+    Vector3 move = dir * Time.deltaTime * follower.speed;
 
     if (move.magnitude > 0) {
       transform.Translate(move);

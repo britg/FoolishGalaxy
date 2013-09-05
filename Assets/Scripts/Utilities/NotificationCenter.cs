@@ -25,6 +25,7 @@ class Notification {
   public static string DashEnd = "OnDashEnd";
 
   public static string JetpackPickup = "OnJetpackPickup";
+  public static string ArtifactPickup = "OnArtifactPickup";
 
   public static string BlackHoleCapture = "OnBlackHoleCapture";
   public static string BlackHoleRelease = "OnBlackHoleRelease";

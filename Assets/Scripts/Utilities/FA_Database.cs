@@ -42,7 +42,9 @@ public class FA_Database : MonoBehaviour {
       CopyDB();
     }
 
-    instance = new GameObject("DB").AddComponent<FA_Database>();
+    GameObject dbObject = new GameObject("DB");
+    DontDestroyOnLoad(dbObject);
+    instance = dbObject.AddComponent<FA_Database>();
   }
 
 

@@ -12,17 +12,17 @@ public enum TitleMenuMode {
   Play
 }
 
-public class TitleMenuController : MonoBehaviour {
+public class TitleMenuController : FGBaseController {
 
   public GameObject levelLabelPrefab;
   public GameObject sectorLabelPrefab;
   public int levelCursor = 0;
-  public Player player;
   public GUIText introText;
   public GUIText enteredName;
   public GUIText playerNameLabel;
   public GameObject leaderTextPrefab;
 
+  private Player player;
   private Hashtable currentLevel;
   private GameObject levelLabel;
   private TitleMenuMode mode;
@@ -30,17 +30,20 @@ public class TitleMenuController : MonoBehaviour {
   private ArrayList leaderTexts;
 
   void Start () {
+    player = GetPlayer();
     SetMode();
 
     if (mode == TitleMenuMode.Play) {
       GetCursor();
       scores = GetComponent<ScoresController>();
-      RefreshDisplay();
+      Invoke("RefreshDisplay", 0.1f); // Race condition
     }
+
+    RegisterFGNotifications();
   }
 
   void SetMode () {
-    if (!player.exists) {
+    if (player == null) {
       mode = TitleMenuMode.Setup;
       introText.gameObject.SetActive(true);
       enteredName = introText.transform.Find("name_input").gameObject.guiText;

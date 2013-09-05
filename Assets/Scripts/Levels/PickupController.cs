@@ -6,21 +6,23 @@ public class PickupController : MonoBehaviour {
   public bool shouldActivateTrap = true;
   public bool shouldStartTime = true;
 
-  public string notificationName;
-
   void OnTriggerEnter () {
     gameObject.SetActive(false);
 
-    if (notificationName != null) {
-      NotificationCenter.PostNotification(this, notificationName);
+    if (shouldActivateTrap) {
+      NotifyActivateTrap();
     }
 
-    if (shouldActivateTrap) {
-      ActivateTrap();
+    if (shouldStartTime) {
+      NotifyStartTime();
     }
   }
 
-  void ActivateTrap () {
+  void NotifyActivateTrap () {
     NotificationCenter.PostNotification(this, Notification.TrapActivated);
+  }
+
+  void NotifyStartTime () {
+    NotificationCenter.PostNotification(this, Notification.StartTime);
   }
 }
