@@ -6,6 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Level 1-6.unity
+  - enabled: 1
     path: Assets/Scenes/Demo - Mined Asteroid.unity
   - enabled: 1
     path: Assets/Scenes/Demo - BlackHole.unity
@@ -21,8 +23,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 1-4.unity
   - enabled: 1
     path: Assets/Scenes/Level 1-5.unity
-  - enabled: 1
-    path: Assets/Scenes/Level 1-6.unity
   - enabled: 1
     path: Assets/Scenes/Level 2-1.unity
   - enabled: 1
