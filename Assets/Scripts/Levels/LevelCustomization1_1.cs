@@ -12,9 +12,8 @@ public class LevelCustomization1_1 : LevelCustomizationBase {
     DisableDash();
 	}
 
-  void OnJetpackPickup () {
+  void OnTrapActivated () {
     EnableJetPack();
-    NotificationCenter.PostNotification(this, Notification.StartTime);
   }
 
 }

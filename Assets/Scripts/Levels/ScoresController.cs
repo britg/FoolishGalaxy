@@ -32,7 +32,7 @@ public class ScoresController : FGBaseController {
   public void ScoresForLevelSuccess (string response) {
     Debug.Log("Response is " + response);
     Hashtable data = MiniJSON.jsonDecode(response) as Hashtable;
-    NotificationCenter.PostNotification(this, "OnScoresForLevel", data);
+    NotificationCenter.PostNotification(this, Notification.ScoresForLevel, data);
   }
 
   public void SetScoreForLevel (int level_id, int milliseconds) {
@@ -48,12 +48,12 @@ public class ScoresController : FGBaseController {
 
   void SetScoreForLevelSuccess (string response) {
     Debug.Log("Set scores response " + response);
-    NotificationCenter.PostNotification(this, "OnSetScoreForLevel");
+    NotificationCenter.PostNotification(this, Notification.ScoresForLevel);
   }
 
   void SetScoreForLevelFail (string response) {
     LogResponse(response);
-    NotificationCenter.PostNotification(this, "OnSetScoreForLevel");
+    NotificationCenter.PostNotification(this, Notification.SetScoreForLevel);
   }
 
   public void Post (string endpoint, WWWForm formData) {

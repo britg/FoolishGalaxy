@@ -9,12 +9,12 @@ class Notification {
 
   public static string LevelWin = "OnLevelWin";
   public static string LevelExit = "OnLevelExit";
+  public static string ScoresForLevel = "OnScoresForLevel";
+  public static string SetScoreForLevel = "OnSetScoreForLevel";
 
   public static string PlayerDeath = "OnPlayerDeath";
 
   public static string TrapActivated = "OnTrapActivated";
-
-  public static string SetScoreForLevel = "OnSetScoreForLevel";
 
   public static string PlayerCollision = "OnPlayerCollision";
   public static string EnemyKill = "OnEnemyKill";

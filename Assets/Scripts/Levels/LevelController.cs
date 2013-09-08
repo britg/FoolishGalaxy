@@ -77,8 +77,8 @@ public class LevelController : FGBaseController {
   void OnLevelWin () {
 
     // TEMP
-    Invoke("RestartLevel", 0.1f);
-    return;
+    //Invoke("RestartLevel", 0.1f);
+    //return;
 
     ShowCompleteText();
     bool betterTime = false;

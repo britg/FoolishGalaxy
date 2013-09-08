@@ -43,7 +43,7 @@ public class TitleMenuController : FGBaseController {
   }
 
   void SetMode () {
-    if (player == null) {
+    if (player == null || !player.exists) {
       mode = TitleMenuMode.Setup;
       introText.gameObject.SetActive(true);
       enteredName = introText.transform.Find("name_input").gameObject.guiText;
@@ -94,7 +94,7 @@ public class TitleMenuController : FGBaseController {
 
       else {
         if (c == "\n"[0] || c == "\r"[0]) {
-          Debug.Log("User entered his name: " + enteredName.guiText.text);
+          log("User entered his name: " + enteredName.guiText.text);
           CreatePlayer(enteredName.text);
         }
         else {
