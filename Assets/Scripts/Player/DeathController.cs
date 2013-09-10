@@ -3,8 +3,6 @@ using System.Collections;
 
 public class DeathController : MonoBehaviour {
 
-  public bool shouldFallToDeath = false;
-  public bool diesOnLand = false;
   public bool deathPosted = false;
 
   private float startY;
@@ -16,9 +14,6 @@ public class DeathController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	  if (diesOnLand) {
-      DieIfLanded();
-    }
 	}
 
   void OnCollisionEnter (Collision collision) {
@@ -43,24 +38,4 @@ public class DeathController : MonoBehaviour {
     NotificationCenter.PostNotification(this, Notification.PlayerDeath, data);
   }
 
-  void OnJumpStart () {
-    if (shouldFallToDeath) {
-      StartCoroutine(TurnOnDeath());
-    }
-  }
-
-  IEnumerator TurnOnDeath () {
-    yield return new WaitForSeconds(0.5f);
-    diesOnLand = true;
-  }
-
-  void DieIfLanded () {
-    if (transform.position.y <= startY && !deathPosted) {
-      Enemy enemy = new Enemy();
-      enemy.deathText = "Fell to your death.";
-        Hashtable data = new Hashtable();
-      data["enemy"] = enemy;
-      PostDeath(data);
-    }
-  }
 }

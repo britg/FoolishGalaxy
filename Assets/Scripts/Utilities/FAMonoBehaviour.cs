@@ -28,4 +28,10 @@ public class FAMonoBehaviour : MonoBehaviour {
     scale.x = v;
     transform.localScale = scale;
   }
+
+  protected void SetPosY (float v) {
+    Vector3 pos = transform.localPosition;
+    pos.y = v;
+    transform.localPosition = pos;
+  }
 }

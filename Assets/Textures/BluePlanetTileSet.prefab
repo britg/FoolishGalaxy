@@ -85,7 +85,7 @@ MonoBehaviour:
   - name: planet_blue_pallete/0
     disableTrimming: 0
     additive: 0
-    scale: {x: 1, y: 1, z: 1}
+    scale: {x: 1, y: 1, z: 10}
     texture: {fileID: 2800000, guid: c63c2617d2604f44a84309384bab37bb, type: 3}
     materialId: 0
     anchor: 4
@@ -112,9 +112,9 @@ MonoBehaviour:
     regionW: 100
     regionH: 100
     regionId: 0
-    colliderType: 2
+    colliderType: 3
     boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    boxColliderMax: {x: 100, y: 100}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -151,9 +151,9 @@ MonoBehaviour:
     regionW: 100
     regionH: 100
     regionId: 1
-    colliderType: 2
+    colliderType: 3
     boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    boxColliderMax: {x: 100, y: 100}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -190,9 +190,9 @@ MonoBehaviour:
     regionW: 100
     regionH: 100
     regionId: 2
-    colliderType: 2
+    colliderType: 3
     boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    boxColliderMax: {x: 100, y: 100}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -211,7 +211,13 @@ MonoBehaviour:
     overrideMesh: {fileID: 0}
     doubleSidedSprite: 0
     customSpriteGeometry: 0
-    geometryIslands: []
+    geometryIslands:
+    - connected: 1
+      points:
+      - {x: 0, y: 0}
+      - {x: 0, y: 100}
+      - {x: 100, y: 100}
+      - {x: 100, y: 0}
     dice: 0
     diceUnitX: 64
     diceUnitY: 64
@@ -229,9 +235,9 @@ MonoBehaviour:
     regionW: 100
     regionH: 100
     regionId: 3
-    colliderType: 2
+    colliderType: 3
     boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    boxColliderMax: {x: 100, y: 100}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0

@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -2.24000001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4a9132a0a99a5541922d8a0b6901ffd, type: 3}
   m_Name: 
+  canWhip: 1
   plasmaWhip:
     duration: .100000001
     holdDuration: .100000001
@@ -410,8 +411,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1449ffba7cb4ced40b776ff1315d65b3, type: 3}
   m_Name: 
-  shouldFallToDeath: 1
-  diesOnLand: 0
   deathPosted: 0
 --- !u!114 &11400022
 MonoBehaviour:

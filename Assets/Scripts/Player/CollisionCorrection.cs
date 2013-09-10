@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CollisionCorrection : MonoBehaviour {
+public class CollisionCorrection : FGBaseController {
 
   public bool shouldCorrect = true;
 
@@ -10,6 +10,7 @@ public class CollisionCorrection : MonoBehaviour {
   private Vector3 playerBottom;
   private Vector3 playerTop;
   private Vector3 lastSafePosition;
+  private Vector3 playerStartPosition;
   private float margin = 0.0f;
 
   void Start () {
@@ -17,6 +18,7 @@ public class CollisionCorrection : MonoBehaviour {
     raycastLength.x = renderer.bounds.size.x / 2.0f + margin;
     raycastLength.y = renderer.bounds.size.y / 2.0f + margin;
     lastSafePosition = transform.position;
+    playerStartPosition = transform.position;
   }
 
   void LateUpdate () {
@@ -46,6 +48,10 @@ public class CollisionCorrection : MonoBehaviour {
         ReturnToLastPosition(dir);
         return;
       }
+    }
+
+    if (transform.position.y < playerStartPosition.y) {
+      SetPosY(playerStartPosition.y);
     }
 
     lastSafePosition = transform.position;
