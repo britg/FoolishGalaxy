@@ -50,9 +50,9 @@ public class CollisionCorrection : FGBaseController {
       }
     }
 
-    if (transform.position.y < playerStartPosition.y) {
-      SetPosY(playerStartPosition.y);
-    }
+    //if (transform.position.y < playerStartPosition.y) {
+      //SetPosY(playerStartPosition.y);
+    //}
 
     lastSafePosition = transform.position;
   }
