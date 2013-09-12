@@ -73,7 +73,6 @@ public class MoveController : FAMonoBehaviour {
 
   public void MovePlayer (Vector3 input) {
     Vector3 vector = input * Time.deltaTime * player.moveSpeed;
-    //frameVelocity.x = (vector*player.moveSpeed).x;
     framePosition.x += input.x * Time.deltaTime * player.moveSpeed;
   }
 

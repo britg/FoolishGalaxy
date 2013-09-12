@@ -37,6 +37,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84c7a4b4ee15890498f818262bca0312, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   textures: []
   textureRefs: []
   spriteSheets:
@@ -151,10 +152,16 @@ MonoBehaviour:
     regionW: 200
     regionH: 200
     regionId: 1
-    colliderType: 0
+    colliderType: 4
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
-    polyColliderIslands: []
+    polyColliderIslands:
+    - connected: 1
+      points:
+      - {x: 93, y: 106}
+      - {x: 0, y: 200}
+      - {x: 200, y: 200}
+      - {x: 200, y: 0}
     polyColliderCap: 1
     colliderConvex: 0
     colliderSmoothSphereCollisions: 0
@@ -502,10 +509,16 @@ MonoBehaviour:
     regionW: 200
     regionH: 200
     regionId: 10
-    colliderType: 0
+    colliderType: 4
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
-    polyColliderIslands: []
+    polyColliderIslands:
+    - connected: 1
+      points:
+      - {x: 90, y: 106}
+      - {x: 0, y: 200}
+      - {x: 200, y: 200}
+      - {x: 200, y: 0}
     polyColliderCap: 1
     colliderConvex: 0
     colliderSmoothSphereCollisions: 0
