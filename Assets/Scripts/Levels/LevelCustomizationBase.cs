@@ -38,6 +38,14 @@ public class LevelCustomizationBase : FGBaseController {
     gunController.canFire = true;
   }
 
+  protected void DisableWhip () {
+
+  }
+
+  protected void EnableWhip () {
+
+  }
+
   protected void DisableDash () {
     dashController.canDash = false;
   }

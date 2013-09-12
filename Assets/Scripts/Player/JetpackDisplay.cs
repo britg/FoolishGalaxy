@@ -88,11 +88,11 @@ public class JetpackDisplay : MonoBehaviour {
     }
   }
 
-  void OnDeath () {
+  void OnPlayerDeath () {
     Reset();
   }
 
-  void OnShuttle () {
+  void OnLevelWin () {
     Reset();
   }
 

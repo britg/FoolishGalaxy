@@ -19,10 +19,18 @@ public class EnemyController : FGBaseController {
     if (Atomized(collision)) {
       ReactToAttack();
     }
+
+    if (Whipped(collision)) {
+      ReactToAttack();
+    }
   }
 
   void OnTriggerEnter (Collider collider) {
     if (Atomized(collider)) {
+      ReactToAttack();
+    }
+
+    if (Whipped(collider)) {
       ReactToAttack();
     }
   }

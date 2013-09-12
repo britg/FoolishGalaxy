@@ -23,4 +23,15 @@ public class FAMonoBehaviour : MonoBehaviour {
     return randomDirection.normalized;
   }
 
+  protected void SetScaleX (float v) {
+    Vector3 scale = transform.localScale;
+    scale.x = v;
+    transform.localScale = scale;
+  }
+
+  protected void SetPosY (float v) {
+    Vector3 pos = transform.localPosition;
+    pos.y = v;
+    transform.localPosition = pos;
+  }
 }

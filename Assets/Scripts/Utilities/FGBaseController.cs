@@ -7,6 +7,7 @@ public class FGBaseController : FAMonoBehaviour {
 
   public static string playerName = "Player";
   public static string gunfireName = "Gunfire";
+  public static string whipName = "Plasma Whip";
 
   bool notificationsRegistered = false;
 
@@ -28,6 +29,14 @@ public class FGBaseController : FAMonoBehaviour {
 
   public static bool Atomized (Collision collision) {
     return collision.gameObject.name == gunfireName;
+  }
+
+  public static bool Whipped (Collider collider) {
+    return collider.gameObject.name == whipName;
+  }
+
+  public static bool Whipped (Collision collision) {
+    return collision.gameObject.name == whipName;
   }
 
   public void RegisterFGNotifications () {
