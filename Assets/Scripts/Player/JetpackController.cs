@@ -7,116 +7,71 @@ public enum JumpState {
   Down
 }
 
+[System.Serializable]
+public class Jetpack {
+  public int charges = 2;
+  public int chargesUsed = 0;
+  public float speed = 100f;
+  public float duration = 0.15f;
+}
+
 public class JetpackController : FGBaseController {
 
-  public bool canJump = true;
+  public Jetpack jetpack;
+  public float gravity = 10f;
 
-  private GameObject playerView;
   private Player player;
-
   private JumpState jumpState;
-  private float jumpPressTime = 0.0f;
-  private bool shouldHalt = false;
-  private bool shouldJump = false;
-  private bool hasNotifiedStart = false;
 
-  private tk2dSprite sprite;
-  private tk2dSpriteAnimator animator;
+  private float currentDuration = 0f;
+  private float gravityDuration = 0f;
+  private static string inputButton = "Jump";
+
+  private Vector3 delta;
 
   void Start () {
-    playerView = gameObject;
-    player = playerView.GetComponent<Player>();
-    sprite = playerView.GetComponent<tk2dSprite>();
-    animator = playerView.GetComponent<tk2dSpriteAnimator>();
-    ResetJumpState();
+    player = GetPlayer();
+    jumpState = JumpState.Still;
   }
 
   void Update () {
-    if (canJump) {
-      DetectJump();
-    }
-  }
-
-  void FixedUpdate () {
-    UpdateJump();
-  }
-
-  void LateUpdate () {
-  }
-
-  void ResetJumpState () {
-    player.jumpsUsed = 0;
-    jumpState = JumpState.Still;
-    int idleId = sprite.GetSpriteIdByName("idle_new/0");
-    sprite.SetSprite(idleId);
-    animator.Play();
-    hasNotifiedStart = false;
-  }
-
-  void DetectJump () {
-    if (Input.GetButtonDown("Jump") && (player.jumpsUsed < player.jumpCount)) {
-
-      shouldJump = true;
-      if ((jumpState != JumpState.Up) || (jumpPressTime > 0.1f)) {
-        shouldHalt = true;
-        player.jumpsUsed++;
-        jumpState = JumpState.Up;
-        int jumpId = sprite.GetSpriteIdByName("jump");
-        sprite.SetSprite(jumpId);
-        animator.Stop();
-      }
+    DetectInput();
+    if (jumpState == JumpState.Down) {
+      ApplyGravity();
     }
 
-    if (Input.GetButton("Jump") && jumpState != JumpState.Down) {
-      if (jumpPressTime < player.jumpDuration) {
-        jumpPressTime += Time.deltaTime;
+    ApplyDelta();
+  }
+
+  void DetectInput () {
+
+    if (Input.GetButtonDown(inputButton)) {
+      jumpState = JumpState.Up;
+      jetpack.chargesUsed += 1;
+    }
+
+    if (Input.GetButton(inputButton)) {
+      if (currentDuration <= jetpack.duration) {
+        delta = Vector3.up * jetpack.speed * Time.deltaTime;
+        currentDuration += Time.deltaTime;
       } else {
-        shouldJump = false;
         jumpState = JumpState.Down;
       }
     }
 
-    if (Input.GetButtonUp("Jump")) {
-      jumpPressTime = 0.0f;
+    if (Input.GetButtonUp(inputButton)) {
+      currentDuration = 0f;
       jumpState = JumpState.Down;
-      shouldJump = false;
     }
+
   }
 
-  void UpdateJump () {
-
-    if (shouldJump) {
-      JumpFrame();
-    }
+  void ApplyGravity () {
+    delta = delta + Vector3.down*gravity*Time.deltaTime;
   }
 
-  void JumpFrame () {
-    Vector3 currV = playerView.transform.rigidbody.velocity;
-    currV.y = (Vector3.up*player.jumpForce).y;
-    playerView.transform.rigidbody.velocity = currV;
-
-    if (!hasNotifiedStart) {
-      NotifyStart();
-    }
-  }
-
-  void NotifyStart () {
-    NotificationCenter.PostNotification(this, Notification.JumpStart);
-    hasNotifiedStart = true;
-  }
-
-  void OnEnemyKill () {
-    player.jumpsUsed = 0;
-    JumpFrame();
-  }
-
-  void OnCollisionEnter (Collision collision) {
-    ResetJumpState();
-  }
-
-  void OnBlackHoleRelease () {
-    JumpFrame();
-    ResetJumpState();
+  void ApplyDelta () {
+    transform.Translate(delta);
   }
 
 }

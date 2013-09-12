@@ -14,12 +14,6 @@ public enum PlayerDirection {
 public class Player : FAMonoBehaviour {
 
   public int hitCount = 1;
-
-  public int jumpCount = 2;
-  public int jumpsUsed = 0;
-  public float jumpForce = 50.0f;
-  public float jumpDuration = 0.15f;
-
   public float fireDuration = 0.1f;
 
   public int dashCount = 1;
@@ -30,19 +24,6 @@ public class Player : FAMonoBehaviour {
   public float moveSpeed = 50.0f;
 
   public PlayerDirection facing = PlayerDirection.Right;
-
-  public int JumpsRemaining () {
-    return jumpCount - jumpsUsed;
-  }
-
-  public float JumpUsedPercent () {
-    float perc = (float)jumpsUsed / (float)jumpCount;
-    return perc;
-  }
-
-  public float JumpRemainingPercent () {
-    return 1.0f - JumpUsedPercent();
-  }
 
   private Hashtable _attributes;
   public Hashtable attributes {
