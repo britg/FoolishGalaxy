@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : FGBaseController {
 
-  public Transform player;
+  private Player player;
+  private Transform playerTransform;
 
   private float minY;
   private float startScreenY;
 
 	// Use this for initialization
 	void Start () {
+    player = GetPlayer();
+    playerTransform = player.gameObject.transform;
+    SetPos(playerTransform.position);
     minY = camera.transform.position.y;
-    player = GameObject.Find("Player").transform;
-    startScreenY = camera.WorldToScreenPoint(player.position).y-1;
+    startScreenY = camera.WorldToScreenPoint(playerTransform.position).y-1;
     Debug.Log("Start screen y is " + startScreenY);
 	}
 
@@ -24,15 +27,20 @@ public class CameraController : MonoBehaviour {
     FollowPlayer();
   }
 
+  void SetPos (Vector3 pos) {
+    pos.z = transform.position.z;
+    transform.position = pos;
+  }
+
   void FollowPlayer () {
-    Vector3 playerPos = camera.WorldToScreenPoint(player.position);
+    Vector3 playerPos = camera.WorldToScreenPoint(playerTransform.position);
     Vector3 currentPos = transform.position;
-    currentPos.x = player.position.x;
+    currentPos.x = playerTransform.position.x;
     //Debug.Log("player is at " + playerPos);
 
     if (playerPos.y >= Screen.height/2) {
       //currentPos.y = Mathf.Clamp(player.position.y, minY, maxY);
-      currentPos.y = player.position.y;
+      currentPos.y = playerTransform.position.y;
     }
 
     if (playerPos.y < startScreenY) {

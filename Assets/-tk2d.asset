@@ -776,3 +776,61 @@ MonoBehaviour:
     loadable: 0
     assetName: 
     version: 3
+  - name: DevTileSet
+    spriteCollectionGUID: 504728a33d38b8043af2adb3cf982454
+    spriteCollectionDataGUID: 827799bb404a9024aa3db89b1eab3a12
+    spriteNames:
+    - dev_tileset2/0
+    - dev_tileset2/1
+    - dev_tileset2/2
+    - dev_tileset2/3
+    - dev_tileset2/4
+    - dev_tileset2/5
+    - dev_tileset2/6
+    - dev_tileset2/7
+    - dev_tileset2/8
+    - dev_tileset2/9
+    - dev_tileset2/10
+    - dev_tileset2/11
+    - dev_tileset2/12
+    - dev_tileset2/13
+    - dev_tileset2/14
+    - dev_tileset2/15
+    spriteTextureGUIDs:
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    - 031c5c0683fcf284bb7a2980e713a184
+    spriteTextureTimeStamps:
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    - 1378932923.79728
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3
