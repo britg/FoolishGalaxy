@@ -3,8 +3,12 @@ using System.Collections;
 
 public class FAMonoBehaviour : MonoBehaviour {
 
-  public static void log (string txt) {
-    Debug.Log(txt);
+  public static bool loggingEnabled = true;
+
+  public static void log (object txt) {
+    if (loggingEnabled) {
+      Debug.Log(txt.ToString());
+    }
   }
 
   protected static bool IsApproximately(float a, float b) {

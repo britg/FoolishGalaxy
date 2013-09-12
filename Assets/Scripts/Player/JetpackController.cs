@@ -7,7 +7,7 @@ public enum JumpState {
   Down
 }
 
-public class JetpackController : MonoBehaviour {
+public class JetpackController : FGBaseController {
 
   public bool canJump = true;
 
