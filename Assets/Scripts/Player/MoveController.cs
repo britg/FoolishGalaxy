@@ -4,7 +4,9 @@ using System.Collections;
 public class MoveController : FGBaseController {
 
   private Player player;
+  private CollisionCorrection collisionCorrection;
   private Vector3 moveInput;
+  private Vector3 delta;
 
   private PlayerDirection _dir;
   private PlayerDirection currentPlayerDirection {
@@ -17,13 +19,17 @@ public class MoveController : FGBaseController {
 
 	void Start () {
     player = GetPlayer();
+    collisionCorrection = gameObject.GetComponent<CollisionCorrection>();
     currentPlayerDirection = PlayerDirection.Right;
 	}
 
   void Update () {
     DetectMoveInput();
     DetectPlayerDirection();
+    DetectCollision();
+  }
 
+  void LateUpdate () {
     if (moveInput.magnitude > 0) {
       MovePlayer(moveInput);
     }
@@ -32,6 +38,7 @@ public class MoveController : FGBaseController {
   void DetectMoveInput () {
     var x = Input.GetAxis("Horizontal");
     moveInput = new Vector3(x, 0, 0);
+    delta = moveInput * Time.deltaTime * player.moveSpeed;
   }
 
   void DetectPlayerDirection () {
@@ -55,10 +62,19 @@ public class MoveController : FGBaseController {
     player.facing = dir;
   }
 
+  void DetectCollision () {
+    Vector3 checkDir = Vector3.right;
+    if (currentPlayerDirection == PlayerDirection.Left) {
+      checkDir = Vector3.left;
+    }
+
+    if (collisionCorrection.Check(checkDir)) {
+      delta = Vector3.zero;
+    }
+  }
+
   public void MovePlayer (Vector3 input) {
-    Vector3 vector = input * Time.deltaTime * player.moveSpeed;
-    log(vector.x);
-    transform.Translate(vector, Space.World);
+    transform.Translate(delta, Space.World);
   }
 
   void OnDashStart (Notification note) {

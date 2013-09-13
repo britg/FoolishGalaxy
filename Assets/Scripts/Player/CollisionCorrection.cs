@@ -3,15 +3,15 @@ using System.Collections;
 
 public class CollisionCorrection : FGBaseController {
 
-  public bool shouldCorrect = true;
-
   private Vector2 raycastLength;
   private Vector3 playerCenter;
   private Vector3 playerBottom;
   private Vector3 playerTop;
+  private Vector3 playerRight;
+  private Vector3 playerLeft;
   private Vector3 lastSafePosition;
   private Vector3 playerStartPosition;
-  private float margin = 0.0f;
+  public float margin = 0.0f;
 
   void Start () {
     raycastLength = new Vector2(0.0f, 0.0f);
@@ -22,17 +22,10 @@ public class CollisionCorrection : FGBaseController {
   }
 
   void LateUpdate () {
-    if (shouldCorrect) {
-      Correct();
-    }
+    //Correct();
   }
 
   void Correct () {
-    playerCenter = transform.position;
-    playerCenter.y = playerCenter.y + renderer.bounds.size.y/2;
-    playerBottom = transform.position;
-    playerTop = transform.position;
-    playerTop.y = playerTop.y + renderer.bounds.size.y;
 
     Vector3[] dirs = new Vector3[4];
     dirs[0] = Vector3.left;
@@ -44,7 +37,6 @@ public class CollisionCorrection : FGBaseController {
     foreach (Vector3 dir in dirs) {
       hit = Check(dir);
       if (hit) {
-        KillVelocity(dir);
         ReturnToLastPosition(dir);
         return;
       }
@@ -68,36 +60,54 @@ public class CollisionCorrection : FGBaseController {
     transform.position = pos;
   }
 
-  bool Check (Vector3 dir) {
+  void SetVectors () {
+    playerCenter = transform.position;
+    playerCenter.y = playerCenter.y + renderer.bounds.size.y/2;
+    playerBottom = transform.position;
+    playerTop = transform.position;
+    playerTop.y = playerTop.y + renderer.bounds.size.y;
+    playerRight = transform.position;
+    playerRight.x += raycastLength.x;
+    playerRight.y += raycastLength.y;
+    playerLeft = transform.position;
+    playerLeft.x -= raycastLength.x;
+    playerLeft.y += raycastLength.y;
+  }
+
+  public bool Check (Vector3 dir) {
+    SetVectors();
     RaycastHit hit;
 
     // Center
-    Debug.DrawRay(playerCenter, dir*raycastLength.x, Color.green, 0, false);
+    Debug.DrawRay(playerCenter, dir*raycastLength.x, Color.red, 0, false);
     if (Physics.Raycast(playerCenter, dir, out hit, raycastLength.x)) {
       return !hit.collider.isTrigger;
     }
 
     // Bottom
     if (dir == Vector3.left || dir == Vector3.right) {
-      Debug.DrawRay(playerBottom, dir*raycastLength.x, Color.green, 0, false);
+      Debug.DrawRay(playerBottom, dir*raycastLength.x, Color.red, 0, false);
       if (Physics.Raycast(playerCenter, dir, out hit, raycastLength.x)) {
         return !hit.collider.isTrigger;
       }
-      Debug.DrawRay(playerTop, dir*raycastLength.x, Color.green, 0, false);
+      Debug.DrawRay(playerTop, dir*raycastLength.x, Color.red, 0, false);
       if (Physics.Raycast(playerTop, dir, out hit, raycastLength.x)) {
+        return !hit.collider.isTrigger;
+      }
+    }
+
+    if (dir == Vector3.down || dir == Vector3.up) {
+      Debug.DrawRay(playerLeft, dir*raycastLength.y, Color.red, 0, false);
+      if (Physics.Raycast(playerLeft, dir, out hit, raycastLength.x)) {
+        return !hit.collider.isTrigger;
+      }
+      Debug.DrawRay(playerRight, dir*raycastLength.y, Color.red, 0, false);
+      if (Physics.Raycast(playerRight, dir, out hit, raycastLength.x)) {
         return !hit.collider.isTrigger;
       }
     }
 
 
     return false;
-  }
-
-  void OnBlackHoleCapture () {
-    shouldCorrect = false;
-  }
-
-  void OnBlackHoleRelease () {
-    shouldCorrect = true;
   }
 }

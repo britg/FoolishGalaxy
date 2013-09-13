@@ -22,6 +22,7 @@ public class JetpackController : FGBaseController {
 
   private Player player;
   private JumpState jumpState;
+  private CollisionCorrection collisionCorrection;
 
   private float currentDuration = 0f;
   private float gravityDuration = 0f;
@@ -31,15 +32,16 @@ public class JetpackController : FGBaseController {
 
   void Start () {
     player = GetPlayer();
+    collisionCorrection = gameObject.GetComponent<CollisionCorrection>();
     jumpState = JumpState.Still;
   }
 
   void Update () {
     DetectInput();
-    if (jumpState == JumpState.Down) {
+    if (jumpState != JumpState.Up) {
       ApplyGravity();
     }
-
+    DetectCollision();
     ApplyDelta();
   }
 
@@ -68,6 +70,17 @@ public class JetpackController : FGBaseController {
 
   void ApplyGravity () {
     delta = delta + Vector3.down*gravity*Time.deltaTime;
+  }
+
+  void DetectCollision () {
+    if (collisionCorrection.Check(Vector3.down) && delta.y <= 0) {
+      jumpState = JumpState.Still;
+      delta = Vector3.zero;
+    }
+
+    if (collisionCorrection.Check(Vector3.up) && delta.y >= 0) {
+      delta = Vector3.zero;
+    }
   }
 
   void ApplyDelta () {
