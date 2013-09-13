@@ -21,7 +21,6 @@ public class ScoresController : FGBaseController {
   }
 
   public void GetScoresForLevel (int level_id) {
-    Hashtable scoresForLevel = new Hashtable();
     string endpoint = "/scores.json?level_id=" + level_id;
     WWW request = new WWW(Endpoint(endpoint));
     onSuccess = ScoresForLevelSuccess;

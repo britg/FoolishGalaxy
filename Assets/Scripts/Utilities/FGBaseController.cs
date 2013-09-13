@@ -9,8 +9,6 @@ public class FGBaseController : FAMonoBehaviour {
   public static string gunfireName = "Gunfire";
   public static string whipName = "Plasma Whip";
 
-  bool notificationsRegistered = false;
-
   public static Player GetPlayer () {
     return GameObject.Find(playerName).GetComponent<Player>();
   }
@@ -46,7 +44,6 @@ public class FGBaseController : FAMonoBehaviour {
 
     foreach (FieldInfo field in noteFields) {
       string noteName = field.GetValue(noteType).ToString();
-      //log(noteName);
       NotificationCenter.AddObserver(this, noteName);
     }
 

@@ -5,13 +5,10 @@ public class DeathController : MonoBehaviour {
 
   public bool deathPosted = false;
 
-  private float startY;
-
 	// Use this for initialization
 	void Start () {
-    startY = transform.position.y;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	}

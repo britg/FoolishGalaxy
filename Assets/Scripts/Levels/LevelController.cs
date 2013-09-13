@@ -56,7 +56,7 @@ public class LevelController : FGBaseController {
 	}
 
   void ShowCompleteText () {
-    GUIText completeText = Instantiate(completeTextPrefab, new Vector3(0.5f, 0.5f, 0.0f), Quaternion.identity) as GUIText;
+    //GUIText completeText = Instantiate(completeTextPrefab, new Vector3(0.5f, 0.5f, 0.0f), Quaternion.identity) as GUIText;
   }
 
   void ShowDeathText (string text) {

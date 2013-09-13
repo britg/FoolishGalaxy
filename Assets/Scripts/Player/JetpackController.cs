@@ -20,18 +20,15 @@ public class JetpackController : FGBaseController {
   public Jetpack jetpack;
   public float gravity = 10f;
 
-  private Player player;
   private JumpState jumpState;
   private CollisionCorrection collisionCorrection;
 
   private float currentDuration = 0f;
-  private float gravityDuration = 0f;
   private static string inputButton = "Jump";
 
   private Vector3 delta;
 
   void Start () {
-    player = GetPlayer();
     collisionCorrection = gameObject.GetComponent<CollisionCorrection>();
     jumpState = JumpState.Still;
   }

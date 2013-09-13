@@ -46,7 +46,7 @@ public class Player : FAMonoBehaviour {
     }
   }
 
-  public string name {
+  public string player_name {
     get {
       return (string)attributes["name"];
     }

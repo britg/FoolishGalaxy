@@ -52,10 +52,10 @@ public class Timer : MonoBehaviour {
     int min = (int)Mathf.Floor(_time / 60.0f);
 
     if (min < 1) {
-      return sec + "." + mss;
+      return secs + "." + mss;
     }
 
-    return min + ":" + sec + "." + mss;
+    return min + ":" + secs + "." + mss;
   }
 
   public int Milliseconds () {

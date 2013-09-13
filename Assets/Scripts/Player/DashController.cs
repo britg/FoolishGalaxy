@@ -13,7 +13,6 @@ public class DashController : MonoBehaviour {
   private Player player;
 
   public bool canDash = false;
-  private CurrentDash currentDash = CurrentDash.None;
   private float currentDashTime = 0.0f;
   private Vector3 dashStartPosition;
   private bool shouldDash = false;
@@ -39,7 +38,7 @@ public class DashController : MonoBehaviour {
     if (canDash) {
       DetectInput();
     }
-    
+
     if (isCoolingDown) {
       CoolDown();
     }
@@ -54,7 +53,7 @@ public class DashController : MonoBehaviour {
 	}
 
   void FixedUpdate () {
-    
+
   }
 
   void LateUpdate () {
@@ -89,11 +88,6 @@ public class DashController : MonoBehaviour {
     shouldDash = true;
     NotifyDashStart(dashDir);
     dashStartPosition = transform.position;
-    if (dir == PlayerDirection.Left) {
-      currentDash = CurrentDash.Left;
-    } else {
-      currentDash = CurrentDash.Right;
-    }
   }
 
   void Dash (PlayerDirection dir) {
@@ -120,7 +114,6 @@ public class DashController : MonoBehaviour {
   }
 
   void EndDash () {
-    currentDash = CurrentDash.None;
     currentDashTime = 0.0f;
     if (!didJumpOut) {
       //player.transform.rigidbody.velocity = Vector3.zero;

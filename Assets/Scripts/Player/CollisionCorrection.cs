@@ -9,55 +9,12 @@ public class CollisionCorrection : FGBaseController {
   private Vector3 playerTop;
   private Vector3 playerRight;
   private Vector3 playerLeft;
-  private Vector3 lastSafePosition;
-  private Vector3 playerStartPosition;
   public float margin = 0.0f;
 
   void Start () {
     raycastLength = new Vector2(0.0f, 0.0f);
     raycastLength.x = renderer.bounds.size.x / 2.0f + margin;
     raycastLength.y = renderer.bounds.size.y / 2.0f + margin;
-    lastSafePosition = transform.position;
-    playerStartPosition = transform.position;
-  }
-
-  void LateUpdate () {
-    //Correct();
-  }
-
-  void Correct () {
-
-    Vector3[] dirs = new Vector3[4];
-    dirs[0] = Vector3.left;
-    dirs[1] = Vector3.right;
-    dirs[2] = Vector3.up;
-    dirs[3] = -Vector3.up;
-    bool hit = false;
-
-    foreach (Vector3 dir in dirs) {
-      hit = Check(dir);
-      if (hit) {
-        ReturnToLastPosition(dir);
-        return;
-      }
-    }
-
-    //if (transform.position.y < playerStartPosition.y) {
-      //SetPosY(playerStartPosition.y);
-    //}
-
-    lastSafePosition = transform.position;
-  }
-
-  void ReturnToLastPosition (Vector3 dir) {
-    Vector3 pos = transform.position;
-
-    if (dir == Vector3.left || dir == Vector3.right) {
-      pos.x = lastSafePosition.x;
-    } else {
-      pos.y = lastSafePosition.y;
-    }
-    transform.position = pos;
   }
 
   void SetVectors () {
