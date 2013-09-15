@@ -17,12 +17,6 @@ public class Player : FAMonoBehaviour {
   public float fireDuration = 0.1f;
 
   public float gravity = 10f;
-
-  public int dashCount = 1;
-  public float dashForce = 50.0f;
-  public float dashDuration = 0.3f;
-  public float dashCooldown = 0.5f;
-
   public float moveSpeed = 50.0f;
 
   public PlayerDirection facing = PlayerDirection.Right;

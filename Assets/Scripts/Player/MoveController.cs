@@ -10,6 +10,7 @@ public class MoveController : FGBaseController {
   private Vector3 moveInput;
   private Vector3 gravityDelta;
   private bool thrusting;
+  private bool dashing;
 
   private bool _grounded;
   public bool grounded {
@@ -63,7 +64,7 @@ public class MoveController : FGBaseController {
   }
 
   void ApplyGravity () {
-    if (grounded || thrusting) {
+    if (grounded || thrusting || dashing) {
       gravityDelta = Vector3.zero;
     } else {
       gravityDelta += Vector3.down * player.gravity * Time.deltaTime;
@@ -138,11 +139,12 @@ public class MoveController : FGBaseController {
   }
 
   void OnDashStart (Notification note) {
-    moveInput = Vector3.zero;
     currentPlayerDirection = (PlayerDirection)note.data["direction"];
+    dashing = true;
   }
 
   void OnDashEnd () {
+    dashing = false;
   }
 
   void OnJumpStart () {

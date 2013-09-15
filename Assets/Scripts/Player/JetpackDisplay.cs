@@ -55,7 +55,7 @@ public class JetpackDisplay : FGBaseController {
 
   void OnJetpackChargeUsed (Notification note) {
     chargesLeft = (int)note.Data("chargesLeft");
-    log("Charges left is " + chargesLeft);
+    //log("Charges left is " + chargesLeft);
     DisplayCharges();
   }
 
