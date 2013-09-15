@@ -16,6 +16,7 @@ public class EnemyController : FGBaseController {
 	}
 
   void OnCollisionEnter (Collision collision) {
+    Debug.Log("On collision enter", this);
     if (Atomized(collision)) {
       ReactToAttack();
     }
@@ -26,6 +27,7 @@ public class EnemyController : FGBaseController {
   }
 
   void OnTriggerEnter (Collider collider) {
+    Debug.Log("On trigger enter", this);
     if (Atomized(collider)) {
       ReactToAttack();
     }
@@ -35,8 +37,8 @@ public class EnemyController : FGBaseController {
     }
   }
 
-  void ReactToAttack () {
-    Destroy(gameObject);
-    NotificationCenter.PostNotification(this, Notification.EnemyKill);
+  protected virtual void ReactToAttack () {
+    Debug.Log("Reacting to attack");
+
   }
 }

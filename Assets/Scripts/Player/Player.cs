@@ -16,6 +16,8 @@ public class Player : FAMonoBehaviour {
   public int hitCount = 1;
   public float fireDuration = 0.1f;
 
+  public float gravity = 10f;
+
   public int dashCount = 1;
   public float dashForce = 50.0f;
   public float dashDuration = 0.3f;

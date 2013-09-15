@@ -37,7 +37,7 @@ public class PlasmaWhipController : FGBaseController {
 	}
 
   void DetectInput () {
-    if (Input.GetButton("Fire1")) {
+    if (Input.GetButtonDown("Fire1")) {
       currentState = PlasmaWhipState.Whip;
     }
   }

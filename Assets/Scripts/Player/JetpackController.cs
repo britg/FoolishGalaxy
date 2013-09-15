@@ -13,45 +13,74 @@ public class Jetpack {
   public int chargesUsed = 0;
   public float speed = 100f;
   public float duration = 0.15f;
+
+  public int ChargesLeft () {
+    return charges - chargesUsed;
+  }
+
+  public bool HasCharges () {
+    return ChargesLeft() > 0;
+  }
+
+  public void ResetCharges () {
+    chargesUsed = 0;
+  }
 }
 
 public class JetpackController : FGBaseController {
 
   public Jetpack jetpack;
-  public float gravity = 10f;
 
-  private JumpState jumpState;
-  private CollisionCorrection collisionCorrection;
+  private MoveController moveController;
 
   private float currentDuration = 0f;
   private static string inputButton = "Jump";
 
   private Vector3 delta;
 
+  private JumpState _jumpState;
+  private JumpState jumpState {
+    get { return _jumpState; }
+    set {
+      if (value == _jumpState) {
+        return;
+      }
+
+      _jumpState = value;
+      switch (_jumpState) {
+        case JumpState.Up:
+          NotifyThrustStart();
+          break;
+        case JumpState.Down:
+          NotifyThrustEnd();
+          break;
+      }
+    }
+    
+  }
+
   void Start () {
-    collisionCorrection = gameObject.GetComponent<CollisionCorrection>();
+    moveController = gameObject.GetComponent<MoveController>();
     jumpState = JumpState.Still;
   }
 
   void Update () {
     DetectInput();
-    if (jumpState != JumpState.Up) {
-      ApplyGravity();
-    }
-    DetectCollision();
-    ApplyDelta();
+    moveController.AppendDelta(delta);
   }
 
   void DetectInput () {
 
     if (Input.GetButtonDown(inputButton)) {
-      jumpState = JumpState.Up;
-      jetpack.chargesUsed += 1;
+      if (jetpack.HasCharges()) {
+        jumpState = JumpState.Up;
+        jetpack.chargesUsed += 1;
+      }
     }
 
     if (Input.GetButton(inputButton)) {
-      if (currentDuration <= jetpack.duration) {
-        delta = Vector3.up * jetpack.speed * Time.deltaTime;
+      if (currentDuration <= jetpack.duration && jumpState == JumpState.Up) {
+        ThrustFrame();
         currentDuration += Time.deltaTime;
       } else {
         jumpState = JumpState.Down;
@@ -65,23 +94,32 @@ public class JetpackController : FGBaseController {
 
   }
 
-  void ApplyGravity () {
-    delta = delta + Vector3.down*gravity*Time.deltaTime;
+  void ThrustFrame () {
+    delta = Vector3.up * jetpack.speed * Time.deltaTime;
   }
 
-  void DetectCollision () {
-    if (collisionCorrection.Check(Vector3.down) && delta.y <= 0) {
-      jumpState = JumpState.Still;
-      delta = Vector3.zero;
-    }
-
-    if (collisionCorrection.Check(Vector3.up) && delta.y >= 0) {
-      delta = Vector3.zero;
-    }
+  void OnGrounded () {
+    // WARNING: this is firing way too often!
+    //log("Received grounded notification!");
+    delta = Vector3.zero;
+    jetpack.ResetCharges();
+    jumpState = JumpState.Still;
   }
 
-  void ApplyDelta () {
-    transform.Translate(delta);
+  void OnJetpackRefill () {
+    jetpack.ResetCharges();
+    NotifyThrustStart();
+    ThrustFrame();
+    Invoke("NotifyThrustEnd", 0.1f);
   }
+
+  void NotifyThrustStart () {
+    NotificationCenter.PostNotification(this, Notification.ThrustStart);
+  }
+
+  void NotifyThrustEnd () {
+    NotificationCenter.PostNotification(this, Notification.ThrustEnd);
+  }
+
 
 }

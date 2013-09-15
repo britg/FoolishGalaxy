@@ -17,9 +17,10 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
-  - 54: {fileID: 5400000}
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400020}
+  - 114: {fileID: 11400014}
+  - 54: {fileID: 5400000}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -90,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 82.7200012, y: 67.3799973, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -212,13 +213,13 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   serializedVersion: 2
-  m_Mass: 200
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &6500000
 BoxCollider:
@@ -262,10 +263,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 270887e8f722f9c49a1b78c37e8a020d, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   canDash: 1
 --- !u!114 &11400002
 MonoBehaviour:
@@ -277,7 +279,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ce6ed806a534af4490bd9b0d7a77485, type: 3}
   m_Name: 
-  canJump: 1
+  m_EditorClassIdentifier: 
+  jetpack:
+    charges: 2
+    chargesUsed: 0
+    speed: 100
+    duration: .300000012
+  gravity: 10
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,6 +296,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c3cc21a3ab8c1f49a030ae3e1877303, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -298,17 +307,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43638308c18ef2f4398c4f389f9e669d, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   hitCount: 1
-  jumpCount: 2
-  jumpsUsed: 0
-  jumpForce: 90
-  jumpDuration: .200000003
   fireDuration: .100000001
   dashCount: 1
   dashForce: 120
   dashDuration: .5
   dashCooldown: .5
-  moveSpeed: 50
+  moveSpeed: 100
   facing: 1
 --- !u!114 &11400008
 MonoBehaviour:
@@ -320,6 +326,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e54113e5604435b8ae87c7754f2725, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   library: {fileID: 11400000, guid: 040b49521de7f5448b9490916d3f4b69, type: 2}
   defaultClipId: 0
   playAutomatically: 1
@@ -333,6 +340,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   collection: {fileID: 11400000, guid: f6a708eaade796148af962dcfd6f34a6, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 1, y: 1, z: 1}
@@ -351,6 +359,19 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6942fd8d72a83d45b220948a20b3530, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a918caa53a4714ee5bd6668298932ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  margin: {x: -.5, y: 0}
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,6 +382,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   collection: {fileID: 11400000, guid: f6a708eaade796148af962dcfd6f34a6, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 1, y: 1.5, z: 1}
@@ -379,6 +401,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4a9132a0a99a5541922d8a0b6901ffd, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   canWhip: 1
   plasmaWhip:
     duration: .100000001
@@ -399,6 +422,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1449ffba7cb4ced40b776ff1315d65b3, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   deathPosted: 0
 --- !u!114 &11400022
 MonoBehaviour:
@@ -410,6 +434,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c891a81b96f71c24d857a3e16a6782ff, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   shouldDisplay: 1
 --- !u!114 &11400024
 MonoBehaviour:
@@ -421,6 +446,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6942fd8d72a83d45b220948a20b3530, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -431,6 +457,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   collection: {fileID: 11400000, guid: cb46792f9fe88274e989a3c7ca9c21d3, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 2, y: 1, z: 1}

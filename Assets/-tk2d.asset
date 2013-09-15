@@ -815,22 +815,35 @@ MonoBehaviour:
     - 031c5c0683fcf284bb7a2980e713a184
     - 031c5c0683fcf284bb7a2980e713a184
     spriteTextureTimeStamps:
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
-    - 1378969845
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    - 1379105699.35563
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3
+  - name: EnemiesSpriteCollection
+    spriteCollectionGUID: 7fb2013cf6650a84cae3502d6fc97ad8
+    spriteCollectionDataGUID: 947a417eb4118d043a6db18c4e2ed480
+    spriteNames:
+    - servo
+    spriteTextureGUIDs:
+    - 6a338fb4f62976449a72f8f0a9dba0b3
+    spriteTextureTimeStamps:
+    - 1379155840.35053
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

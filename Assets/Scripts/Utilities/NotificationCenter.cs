@@ -20,6 +20,11 @@ class Notification {
   public static string EnemyKill = "OnEnemyKill";
 
   public static string JumpStart = "OnJumpStart";
+  public static string ThrustStart = "OnThrustStart";
+  public static string ThrustEnd = "OnThrustEnd";
+  public static string Grounded = "OnGrounded";
+
+  public static string JetpackRefill = "OnJetpackRefill";
 
   public static string DashStart = "OnDashStart";
   public static string DashEnd = "OnDashEnd";
