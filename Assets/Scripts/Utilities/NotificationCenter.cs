@@ -24,6 +24,7 @@ class Notification {
   public static string ThrustEnd = "OnThrustEnd";
   public static string Grounded = "OnGrounded";
 
+  public static string JetpackChargeUsed = "OnJetpackChargeUsed";
   public static string JetpackRefill = "OnJetpackRefill";
 
   public static string DashStart = "OnDashStart";
@@ -50,6 +51,10 @@ class Notification {
     sender = aSender;
     name = aName;
     data = aData;
+  }
+
+  public object Data (string key) {
+    return data[key];
   }
 }
 

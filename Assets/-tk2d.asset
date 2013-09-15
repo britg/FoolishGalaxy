@@ -848,3 +848,16 @@ MonoBehaviour:
     loadable: 0
     assetName: 
     version: 3
+  - name: PlayerSpriteCollection
+    spriteCollectionGUID: edcd5c917754b464a8b50fb256bc62ae
+    spriteCollectionDataGUID: 08e8fccb7206d034aabd081d0d47eaf1
+    spriteNames:
+    - jetpack_charge
+    spriteTextureGUIDs:
+    - f7c8ad071c3a705449b6cd7a04819032
+    spriteTextureTimeStamps:
+    - 1379237824.60205
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3

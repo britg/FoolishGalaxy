@@ -7,26 +7,6 @@ public enum JumpState {
   Down
 }
 
-[System.Serializable]
-public class Jetpack {
-  public int charges = 2;
-  public int chargesUsed = 0;
-  public float speed = 100f;
-  public float duration = 0.15f;
-
-  public int ChargesLeft () {
-    return charges - chargesUsed;
-  }
-
-  public bool HasCharges () {
-    return ChargesLeft() > 0;
-  }
-
-  public void ResetCharges () {
-    chargesUsed = 0;
-  }
-}
-
 public class JetpackController : FGBaseController {
 
   public Jetpack jetpack;
@@ -74,7 +54,7 @@ public class JetpackController : FGBaseController {
     if (Input.GetButtonDown(inputButton)) {
       if (jetpack.HasCharges()) {
         jumpState = JumpState.Up;
-        jetpack.chargesUsed += 1;
+        UseCharge();
       }
     }
 
@@ -104,6 +84,18 @@ public class JetpackController : FGBaseController {
     delta = Vector3.zero;
     jetpack.ResetCharges();
     jumpState = JumpState.Still;
+    NotifyChargesLeft();
+  }
+
+  void UseCharge () {
+    jetpack.chargesUsed += 1;
+    NotifyChargesLeft();
+  }
+
+  void NotifyChargesLeft () {
+    Hashtable data = new Hashtable();
+    data["chargesLeft"] = jetpack.ChargesLeft();
+    NotificationCenter.PostNotification(this, Notification.JetpackChargeUsed, data);
   }
 
   void OnJetpackRefill () {
@@ -111,6 +103,7 @@ public class JetpackController : FGBaseController {
     NotifyThrustStart();
     ThrustFrame();
     Invoke("NotifyThrustEnd", 0.1f);
+    NotifyChargesLeft();
   }
 
   void NotifyThrustStart () {
