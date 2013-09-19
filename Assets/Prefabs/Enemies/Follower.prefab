@@ -28,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -131.720001, y: 64.9300003, z: 0}
+  m_LocalPosition: {x: -19.3199997, y: 81.1134872, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   collection: {fileID: 11400000, guid: cb46792f9fe88274e989a3c7ca9c21d3, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 2, y: 2, z: 1}
@@ -97,8 +98,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6942fd8d72a83d45b220948a20b3530, type: 3}
   m_Name: 
-  notifications:
-  - OnArtifactPickup
+  m_EditorClassIdentifier: 
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,8 +109,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b965d377efe8db642a0dbbc27af2a4ad, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
+  enemy:
+    deathText: Death
+    killOnContact: 1
+  follower:
+    speed: 70
   shouldFollow: 0
-  speed: 9
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

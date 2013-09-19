@@ -6,7 +6,7 @@ public class PickupController : MonoBehaviour {
   public bool shouldActivateTrap = true;
   public bool shouldStartTime = true;
 
-  void OnTriggerEnter () {
+  public void PickedUp () {
     gameObject.SetActive(false);
 
     if (shouldActivateTrap) {
